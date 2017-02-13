@@ -53,6 +53,13 @@ but you may use whatever you like.
 ],
 ```
 
+## JWTAuth Tokens ##
+
+If you're taking advantage of token authentication with [tymon/jwt-auth][4] then
+set this variable in your `.env`
+
+    JWTAUTH=true
+
 ## Looking for Laravel 5.0 or 4? ##
 
 Laravel 5.0 should be compatible up to tag 1.1.1
@@ -62,5 +69,6 @@ We have stopped development on the Laravel 4 version of this plugin for now. We 
 [1]:https://getcomposer.org/
 [2]:https://codeclimate.com/github/StudentAffairsUWM/Laravel-Shibboleth-Service-Provider
 [3]:https://codeclimate.com/github/StudentAffairsUWM/Laravel-Shibboleth-Service-Provider/badges/gpa.svg
+[4]:https://github.com/tymondesigns/jwt-auth
 [11]:https://travis-ci.org/uawcob/Laravel-Shibboleth-Service-Provider
 [12]:https://travis-ci.org/uawcob/Laravel-Shibboleth-Service-Provider.svg?branch=master

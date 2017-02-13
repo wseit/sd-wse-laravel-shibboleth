@@ -91,13 +91,13 @@ class ShibbolethController extends Controller
         if (Auth::attempt(array('email' => $email, 'password' => $password, 'type' => 'local'), true)) {
             $user = $userClass::where('email', '=', $email)->first();
 
-            // This is where we used to setup a session. Now we will setup a token.
-            $customClaims = ['auth_type' => 'local'];
-            $token        = JWTAuth::fromUser($user, $customClaims);
+            $viewOrRedirect = config('shibboleth.local_authenticated');
 
-            // We need to pass the token... how?
-            // Let's try this.
-            return $this->viewOrRedirect(config('shibboleth.local_authenticated') . '?token=' . $token);
+            if (env('JWTAUTH')) {
+                $viewOrRedirect .= $this->tokenizeRedirect($user, ['auth_type' => 'local']);
+            }
+
+            return $this->viewOrRedirect($viewOrRedirect);
         }
 
         Session::flash('message', 'Invalid email or password.');
@@ -123,7 +123,7 @@ class ShibbolethController extends Controller
         if (Auth::attempt(array('email' => $email, 'type' => 'shibboleth'), true)) {
             $user = $userClass::where('email', '=', $email)->first();
 
-            // Update the modal as necessary
+            // Update the model as necessary
             if (isset($firstName)) {
                 $user->first_name = $firstName;
             }
@@ -134,13 +134,13 @@ class ShibbolethController extends Controller
 
             $user->save();
 
-            // This is where we used to setup a session. Now we will setup a token.
-            $customClaims = ['auth_type' => 'idp'];
-            $token        = JWTAuth::fromUser($user, $customClaims);
+            $viewOrRedirect = config('shibboleth.shibboleth_authenticated');
 
-            // We need to pass the token... how?
-            // Let's try this.
-            return $this->viewOrRedirect(config('shibboleth.shibboleth_authenticated') . '?token=' . $token);
+            if (env('JWTAUTH')) {
+                $viewOrRedirect .= $this->tokenizeRedirect($user, ['auth_type' => 'idp']);
+            }
+
+            return $this->viewOrRedirect($viewOrRedirect);
         }
 
         //Add user to group and send through auth.
@@ -181,23 +181,25 @@ class ShibbolethController extends Controller
      */
     public function destroy()
     {
-        $token = JWTAuth::parseToken();
-
-        $payload = $token->getPayload();
-
+        $authType = Auth::user()->type;
         Auth::logout();
         Session::flush();
-        $token->invalidate();
 
-        if ($payload->get('auth_type') == 'idp') {
-            if (config('shibboleth.emulate_idp') == true) {
-                return Redirect::to(action('\\' . __CLASS__ . '@emulateLogout'));
-            }
-
-            return Redirect::to('https://' . Request::server('SERVER_NAME') . config('shibboleth.idp_logout'));
+        if (env('JWTAUTH')) {
+            $token = JWTAuth::parseToken();
+            $token->invalidate();
         }
 
-        return $this->viewOrRedirect(config('shibboleth.local_logout'));
+        if ($authType === 'local') {
+            return $this->viewOrRedirect(config('shibboleth.local_logout'));
+        }
+
+        if (config('shibboleth.emulate_idp') == true) {
+            return Redirect::to(action('\\' . __CLASS__ . '@emulateLogout'));
+        }
+
+        return Redirect::to('https://' . Request::server('SERVER_NAME') . config('shibboleth.idp_logout'));
+
     }
 
     /**
@@ -295,5 +297,22 @@ class ShibbolethController extends Controller
     private function viewOrRedirect($view)
     {
         return (View::exists($view)) ? view($view) : Redirect::to($view);
+    }
+
+    /**
+     * Uses JWTAuth to tokenize the user and returns a URL query string.
+     *
+     * @param  App\User $user
+     * @param  array $customClaims
+     * @return string
+     */
+    private function tokenizeRedirect($user, $customClaims)
+    {
+        // This is where we used to setup a session. Now we will setup a token.
+        $token = JWTAuth::fromUser($user, $customClaims);
+
+        // We need to pass the token... how?
+        // Let's try this.
+        return "?token=$token";
     }
 }
