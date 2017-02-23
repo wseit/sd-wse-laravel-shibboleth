@@ -33,7 +33,7 @@
     "autoload-dev": {
         "psr-4": {
             "StudentAffairsUwm\\Shibboleth\\Tests\\": "tests/",
-            "App\\": "src/StudentAffairsUwm/Shibboleth"
+            "App\\": "src/app"
         }
     },
     "minimum-stability": "stable",
