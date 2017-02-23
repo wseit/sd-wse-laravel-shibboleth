@@ -16,9 +16,9 @@ class Entitlement
     public function __construct($entitlement)
     {
         if (!is_string($entitlement)) {
-            $class = get_class($entitlement);
+            $type = gettype($entitlement);
             throw new InvalidArgumentException(
-                "Entitlement requires instance of string, $class given."
+                "Entitlement requires instance of string, $type given."
             );
         }
     }

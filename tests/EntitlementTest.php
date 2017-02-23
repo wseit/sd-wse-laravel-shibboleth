@@ -9,6 +9,14 @@ class EntitlementTest extends TestCase
 {
     use Setup;
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCanInvalidateConstructorParameter()
+    {
+        new Entitlement(1);
+    }
+
     public function testCanApplyEntitlements()
     {
         $user = new User;
