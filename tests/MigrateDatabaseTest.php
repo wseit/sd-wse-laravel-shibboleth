@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use Orchestra\Testbench\TestCase;
 use StudentAffairsUwm\Shibboleth\Tests\Stubs\Setup;
+use App\User;
 
 class MigrateDatabaseTest extends TestCase
 {
@@ -16,16 +17,18 @@ class MigrateDatabaseTest extends TestCase
     public function testRunningMigration()
     {
         $now = Carbon::now();
-        \DB::table('users')->insert([
+
+        User::create([
             'first_name' => 'Jeff',
             'last_name'  => 'Puckett',
             'email'      => 'jeff@jeffpuckett.com',
-            'password'   => \Hash::make('456'),
+            'password'   => 'password',
             'created_at' => $now,
             'updated_at' => $now,
         ]);
-        $users = \DB::table('users')->where('id', '=', 1)->first();
-        $this->assertEquals('jeff@jeffpuckett.com', $users->email);
-        $this->assertTrue(\Hash::check('456', $users->password));
+
+        $user = DB::table('users')->where('id', '=', 1)->first();
+
+        $this->assertSame('jeff@jeffpuckett.com', $user->email);
     }
 }

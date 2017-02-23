@@ -32,7 +32,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "StudentAffairsUwm\\Shibboleth\\Tests\\": "tests/"
+            "StudentAffairsUwm\\Shibboleth\\Tests\\": "tests/",
+            "App\\": "src/StudentAffairsUwm/Shibboleth"
         }
     },
     "minimum-stability": "stable",
