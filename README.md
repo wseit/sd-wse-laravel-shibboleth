@@ -84,6 +84,14 @@ in order to match your custom table name and foreign key relationship.
 Now users may login via Shibboleth by going to `https://example.com/idp`
 and logout using `https://example.com/logout`
 
+You may configure server variable mappings in `config/shibboleth.php` such as
+the user's first name, last name, entitlements, etc. You can take a look at them
+by reading what's been populated into the `$_SERVER` variable after authentication.
+
+```php
+<?php print_r($_SERVER);
+```
+
 ## Groups and Entitlements ##
 
 The old 1.x versions required a base `App\Group` model, but this interfered with
@@ -92,6 +100,22 @@ database migrations exists called `StudentAffairsUwm\Shibboleth\Entitlement`
 which allows access control mechanisms to be built around the extraneous source.
 Synchronization of these objects are independent of native groups, so
 authorization can be delegated with inherent separation of concerns.
+
+You will need to add entitlements in which you are interested to the database.
+This can easily be accomplished with artisan tinker.
+
+    $ php artisan tinker
+
+```php
+>>> $entitlement = new StudentAffairsUwm\Shibboleth\Entitlement;
+=> StudentAffairsUwm\Shibboleth\Entitlement {#689}
+>>> $entitlement->name = 'urn:mace:uark.edu:ADGroups:walton:Groups:linux02_sudoers'
+=> "urn:mace:uark.edu:ADGroups:walton:Groups:linux02_sudoers"
+>>> $entitlement->save()
+=> true
+```
+
+Now you can draft [policies and gates][16] around these entitlements.
 
 ## JWTAuth Tokens ##
 
@@ -117,3 +141,4 @@ Feel free to use any tag below 1.0.0 for Laravel 4 compatible versions.
 [13]:https://github.com/mrclay/shibalike
 [14]:https://laravel.com/docs/5.4/eloquent-relationships#many-to-many
 [15]:./src/database/migrations/2017_02_24_100000_create_entitlement_user_table.php
+[16]:https://laravel.com/docs/5.4/authorization

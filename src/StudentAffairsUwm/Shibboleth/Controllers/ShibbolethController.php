@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Console\AppNamespaceDetectorTrait;
 use JWTAuth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use StudentAffairsUwm\Shibboleth\Entitlement;
 
 class ShibbolethController extends Controller
 {
@@ -110,6 +111,10 @@ class ShibbolethController extends Controller
         else {
             return abort(403, 'Unauthorized');
         }
+
+        $entitlementString = $this->getServerVariable(config('shibboleth.idp_login_entitlement'));
+        $entitlements = Entitlement::findInString($entitlementString);
+        $user->entitlements()->sync($entitlements);
 
         $route = config('shibboleth.authenticated');
 

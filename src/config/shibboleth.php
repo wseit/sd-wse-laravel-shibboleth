@@ -63,10 +63,11 @@ return array(
     |
      */
 
-    'idp_login_email'      => 'mail',
-    'idp_login_name'       => 'displayName',
-    'idp_login_first_name' => 'givenName',
-    'idp_login_last_name'  => 'sn',
+    'idp_login_email'       => 'mail',
+    'idp_login_name'        => 'displayName',
+    'idp_login_first_name'  => 'givenName',
+    'idp_login_last_name'   => 'sn',
+    'idp_login_entitlement' => 'entitlement',
 
     /*
     |--------------------------------------------------------------------------
