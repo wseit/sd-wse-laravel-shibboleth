@@ -21,6 +21,11 @@ into explaining how to set that up.
 
 ## Installation ##
 
+If you would like to allow local registration as well as authenticate shibboleth
+users, then use laravel's built-in auth system.
+
+    $ php artisan make:auth
+
 Use [composer][1] to require the latest release into your project:
 
     $ composer require saitswebuwm/shibboleth
@@ -75,6 +80,9 @@ This assumes you have a `users` table with an integer primary key of `id`
 so if you have a custom configuration, then you will need to manually edit the
 [`database/migrations/2017_02_24_100000_create_entitlement_user_table.php`][15]
 in order to match your custom table name and foreign key relationship.
+
+Now users may login via Shibboleth by going to `https://example.com/idp`
+and logout using `https://example.com/logout`
 
 ## Groups and Entitlements ##
 

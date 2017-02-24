@@ -39,7 +39,7 @@ class ShibbolethController extends Controller
      */
     public function __construct(GenericUser $user = null)
     {
-        if (config('shibboleth.emulate_idp') == true) {
+        if (config('shibboleth.emulate_idp') === true) {
             $this->config         = new \Shibalike\Config();
             $this->config->idpUrl = '/emulated/idp';
 
@@ -58,9 +58,9 @@ class ShibbolethController extends Controller
      * Create the session, send the user away to the IDP
      * for authentication.
      */
-    public function create()
+    public function login()
     {
-        if (config('shibboleth.emulate_idp') == true) {
+        if (config('shibboleth.emulate_idp') === true) {
             return Redirect::to(action('\\' . __CLASS__ . '@emulateLogin')
                 . '?target=' .  action('\\' . __CLASS__ . '@idpAuthorize'));
         }
@@ -68,40 +68,6 @@ class ShibbolethController extends Controller
         return Redirect::to('https://' . Request::server('SERVER_NAME')
             . ':' . Request::server('SERVER_PORT') . config('shibboleth.idp_login')
             . '?target=' . action('\\' . __CLASS__ . '@idpAuthorize'));
-    }
-
-    /**
-     * Login for users not using the IdP.
-     */
-    public function localCreate()
-    {
-        return $this->viewOrRedirect(config('shibboleth.local_login'));
-    }
-
-    /**
-     * Authorize function for users not using the IdP.
-     */
-    public function localAuthorize()
-    {
-        $email    = Input::get(config('shibboleth.local_login_user_field'));
-        $password = Input::get(config('shibboleth.local_login_pass_field'));
-
-        $userClass  = config('auth.providers.users.model');
-
-        if (Auth::attempt(array('email' => $email, 'password' => $password), true)) {
-            $user = $userClass::where('email', '=', $email)->first();
-
-            $viewOrRedirect = config('shibboleth.local_authenticated');
-
-            if (env('JWTAUTH')) {
-                $viewOrRedirect .= $this->tokenizeRedirect($user, ['auth_type' => 'local']);
-            }
-
-            return $this->viewOrRedirect($viewOrRedirect);
-        }
-
-        Session::flash('message', 'Invalid email or password.');
-        return $this->viewOrRedirect(config('shibboleth.local_login'));
     }
 
     /**
@@ -128,18 +94,10 @@ class ShibbolethController extends Controller
                 'first_name' => $firstName,
                 'last_name'  => $lastName,
             ]);
-
-            $viewOrRedirect = config('shibboleth.shibboleth_authenticated');
-
-            if (env('JWTAUTH')) {
-                $viewOrRedirect .= $this->tokenizeRedirect($user, ['auth_type' => 'idp']);
-            }
-
-            return $this->viewOrRedirect($viewOrRedirect);
         }
 
         // Add user and send through auth.
-        if (isset($email) && config('shibboleth.add_new_users', true)) {
+        elseif (isset($email) && config('shibboleth.add_new_users', true)) {
             $user = $userClass::create(array(
                 'email'      => $email,
                 'name'       => $name,
@@ -149,15 +107,17 @@ class ShibbolethController extends Controller
             ));
         }
 
-        // this is simply brings us back to the session-setting branch directly above
-        if (config('shibboleth.emulate_idp') == true) {
-            return Redirect::to(action('\\' . __CLASS__ . '@emulateLogin')
-                . '?target=' . action('\\' . __CLASS__ . '@idpAuthorize'));
+        else {
+            return abort(403, 'Unauthorized');
         }
 
-        return Redirect::to('https://' . Request::server('SERVER_NAME')
-            . ':' . Request::server('SERVER_PORT') . config('shibboleth.idp_login')
-            . '?target=' . action('\\' . __CLASS__ . '@idpAuthorize'));
+        $route = config('shibboleth.authenticated');
+
+        if (env('JWTAUTH') === true) {
+            $route .= $this->tokenizeRedirect($user, ['auth_type' => 'idp']);
+        }
+
+        return redirect($route);
     }
 
     /**
@@ -165,7 +125,6 @@ class ShibbolethController extends Controller
      */
     public function destroy()
     {
-        $authType = Auth::user()->type;
         Auth::logout();
         Session::flush();
 
@@ -174,16 +133,11 @@ class ShibbolethController extends Controller
             $token->invalidate();
         }
 
-        if ($authType === 'local') {
-            return $this->viewOrRedirect(config('shibboleth.local_logout'));
-        }
-
         if (config('shibboleth.emulate_idp') == true) {
             return Redirect::to(action('\\' . __CLASS__ . '@emulateLogout'));
         }
 
         return Redirect::to('https://' . Request::server('SERVER_NAME') . config('shibboleth.idp_logout'));
-
     }
 
     /**

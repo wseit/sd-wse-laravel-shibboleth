@@ -12,15 +12,9 @@ return array(
     |
      */
 
-    'local_login'              => 'LocalLogin',
-    'local_logout'             => 'localLogout',
-    'local_authorized'         => 'authed',
-    'local_unauthorized'       => 'loginUnauthorized',
-
-    'idp_login'                => '/Shibboleth.sso/Login',
-    'idp_logout'               => '/Shibboleth.sso/Logout',
-    'shibboleth_authenticated' => 'authed',
-    'shibboleth_unauthorized'  => 'loginUnauthorized',
+    'idp_login'     => '/Shibboleth.sso/Login',
+    'idp_logout'    => '/Shibboleth.sso/Logout',
+    'authenticated' => '/home',
 
     /*
     |--------------------------------------------------------------------------
@@ -35,8 +29,8 @@ return array(
     |
      */
 
-    'emulate_idp'              => true,
-    'emulate_idp_users'        => array(
+    'emulate_idp'       => false,
+    'emulate_idp_users' => array(
         'admin' => array(
             'uid'         => 'admin',
             'displayName' => 'Admin User',
@@ -69,12 +63,10 @@ return array(
     |
      */
 
-    'local_login_user_field'   => 'local_email',
-    'local_login_pass_field'   => 'local_password',
-    'idp_login_email'          => 'mail',
-    'idp_login_name'           => 'displayName',
-    'idp_login_first_name'     => 'givenName',
-    'idp_login_last_name'      => 'sn',
+    'idp_login_email'      => 'mail',
+    'idp_login_name'       => 'displayName',
+    'idp_login_first_name' => 'givenName',
+    'idp_login_last_name'  => 'sn',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,6 +77,6 @@ return array(
     |
      */
 
-    'add_new_users'            => true, // Should new users be added automatically if they do not exist?
+    'add_new_users' => true, // Should new users be added automatically if they do not exist?
 
 );
