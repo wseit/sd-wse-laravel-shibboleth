@@ -5,31 +5,23 @@ namespace StudentAffairsUwm\Shibboleth;
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
-class Entitlement
+class Entitlement extends Model
 {
     /**
-     * Creates an instance of Entitlement from a server string.
+     * Returns collection of database entitlements found in a string.
      *
-     * @param  string $entitlement
-     * @return Entitlement
+     * @param  string $entitlements
+     * @return Illuminate\Support\Collection
      */
-    public function __construct($entitlement)
+    public static function findInString($entitlements)
     {
-        if (!is_string($entitlement)) {
-            $type = gettype($entitlement);
+        if (!is_string($entitlements)) {
+            $type = gettype($entitlements);
             throw new InvalidArgumentException(
-                "Entitlement requires instance of string, $type given."
+                "Instance of string required, $type given."
             );
         }
-    }
 
-    /**
-     * Applies entitlements to a user.
-     *
-     * @param  Model $user
-     */
-    public function applyTo(Model $user)
-    {
-        
+        return static::whereIn('name', explode(';', $entitlements))->get();
     }
 }

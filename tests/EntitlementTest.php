@@ -12,30 +12,31 @@ class EntitlementTest extends TestCase
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testCanInvalidateConstructorParameter()
+    public function testCanInvalidateFindInStringParameter()
     {
-        new Entitlement(1);
+        Entitlement::findInString(1);
     }
 
-    public function testCanCreateEntitlement()
+    public function testCanFindEntitlementsInString()
     {
-        $entitlement = "urn:mace:dir:entitlement:common-lib-terms;urn:mace:uark.edu:ADGroups:Computing Services:Bomgar Groups:Bomgar-WCOB;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:Old Security Groups:WCOB-TechCenter;urn:mace:uark.edu:ADGroups:Exchange Resource Units:UITS (University IT Services):UITS: TechPartners;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:WCOB-Intranet;urn:mace:uark.edu:ADGroups:walton:Groups:linux02_sudoers;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:WCOB-Users;urn:mace:uark.edu:ADGroups:Exchange Resource Units:WCOB (Walton College):WCOB: Conference Team";
+        $sudoer = new Entitlement;
+        $sudoer->name = 'urn:mace:uark.edu:ADGroups:walton:Groups:linux02_sudoers';
+        $sudoer->save();
 
-        $entitlement = new Entitlement($entitlement);
+        $bomgar = new Entitlement;
+        $bomgar->name = 'urn:mace:uark.edu:ADGroups:Computing Services:Bomgar Groups:Bomgar-WCOB';
+        $bomgar->save();
 
-        $this->assertInstanceOf(Entitlement::class, $entitlement);
-    }
+        $expected = collect([$sudoer, $bomgar])->toArray();
 
-    public function testCanApplyEntitlements()
-    {
-        $user = new User;
+        $absent = new Entitlement;
+        $absent->name = 'urn:mace:uark.edu:ADGroups:Something Somesuch:Entitlement-User-Does-Not-Have';
+        $absent->save();
 
-        $entitlement = "urn:mace:dir:entitlement:common-lib-terms;urn:mace:uark.edu:ADGroups:Computing Services:Bomgar Groups:Bomgar-WCOB;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:Old Security Groups:WCOB-TechCenter;urn:mace:uark.edu:ADGroups:Exchange Resource Units:UITS (University IT Services):UITS: TechPartners;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:WCOB-Intranet;urn:mace:uark.edu:ADGroups:walton:Groups:linux02_sudoers;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:WCOB-Users;urn:mace:uark.edu:ADGroups:Exchange Resource Units:WCOB (Walton College):WCOB: Conference Team";
+        $entitlementString = 'urn:mace:dir:entitlement:common-lib-terms;urn:mace:uark.edu:ADGroups:Computing Services:Bomgar Groups:Bomgar-WCOB;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:Old Security Groups:WCOB-TechCenter;urn:mace:uark.edu:ADGroups:Exchange Resource Units:UITS (University IT Services):UITS: TechPartners;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:WCOB-Intranet;urn:mace:uark.edu:ADGroups:walton:Groups:linux02_sudoers;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:WCOB-Users;urn:mace:uark.edu:ADGroups:Exchange Resource Units:WCOB (Walton College):WCOB: Conference Team';
 
-        $entitlement = new Entitlement($entitlement);
+        $entitlements = Entitlement::findInString($entitlementString)->toArray();
 
-        $entitlement->applyTo($user);
-
-        // TODO: fetch user groups and verify membership mapping
+        $this->assertEquals($expected, $entitlements);
     }
 }
