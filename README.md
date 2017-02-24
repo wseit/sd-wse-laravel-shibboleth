@@ -1,7 +1,8 @@
 Laravel Shibboleth Service Provider
 ===================================
 
-This package provides an easy way to implement Shibboleth Authentication for Laravel 5.4
+This package provides an easy way to implement Shibboleth Authentication for
+Laravel 5.4
 
 [![Code Climate][3]][2]
 [![Build Status][12]][11]
@@ -10,11 +11,13 @@ This package provides an easy way to implement Shibboleth Authentication for Lar
 
 - Compatibility with Laravel 5.4
 - Includes User and Group model examples
-- Ability to *emulate* an IdP (via [https://github.com/mrclay/shibalike](https://github.com/mrclay/shibalike "Shibalike"))
+- Ability to *emulate* an IdP (via [mrclay/shibalike][13])
 
 ## Pre-Requisites ##
 
-In order to use this plugin, we assume you already have a pre-existing Shibboleth SP and Shibboleth IdP configured. This does not (and will not) go into explaining how to set that up.
+In order to use this plugin, we assume you already have a pre-existing
+Shibboleth SP and Shibboleth IdP configured. This does not (and will not) go
+into explaining how to set that up.
 
 ## Installation ##
 
@@ -22,36 +25,65 @@ Use [composer][1] to require the latest release into your project:
 
     $ composer require saitswebuwm/shibboleth
 
-Then, append the following line inside your `/config/app.php` file within the `Providers` array.
+Then, append the following line inside your `/config/app.php` file within the
+`Providers` array.
 
 ```php
 StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider::class,
 ```
 
-Publish to include some default models, the database migrations, and the configuration file in your project.
-We include migrations for a simple user and group table, it is up to you to expand upon those.
-
-Run the following commands to publish and then migrate your database:
+Publish the default configuration file, migrations, and views:
 
     $ php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider"
+
+Run the database migrations:
+
     $ php artisan migrate
 
-Once the migrations have run successfully, change the driver to `shibboleth` in your `/config/auth.php` file.
-
-When using the "shibboleth" authentication driver, it requires that a
-group model is supported. Of course, it is often just the "Group" model
-but you may use whatever you like.
-
+Once the migrations have run successfully, change the driver to `shibboleth` in
+your `/config/auth.php` file.
 
 ```php
 'providers' => [
     'users' => [
-        'driver'      => 'shibboleth',
-        'model'       => App\User::class,
-        'group_model' => App\Group::class,
+        'driver' => 'shibboleth',
+        'model'  => App\User::class,
     ],
 ],
 ```
+
+Add Entitlement [`belongsToMany` relationship][14] to your User model:
+
+```php
+use StudentAffairsUwm\Shibboleth\Entitlement;
+
+class User extends Model
+{
+    // ...
+
+    /**
+     * The entitlements that belong to the user.
+     */
+    public function entitlements()
+    {
+        return $this->belongsToMany(Entitlement::class);
+    }
+}
+```
+
+This assumes you have a `users` table with an integer primary key of `id`
+so if you have a custom configuration, then you will need to manually edit the
+[`database/migrations/2017_02_24_100000_create_entitlement_user_table.php`][15]
+in order to match your custom table name and foreign key relationship.
+
+## Groups and Entitlements ##
+
+The old 1.x versions required a base `App\Group` model, but this interfered with
+native authorization policies not dependent on Shibboleth. Now a new model with
+database migrations exists called `StudentAffairsUwm\Shibboleth\Entitlement`
+which allows access control mechanisms to be built around the extraneous source.
+Synchronization of these objects are independent of native groups, so
+authorization can be delegated with inherent separation of concerns.
 
 ## JWTAuth Tokens ##
 
@@ -64,7 +96,9 @@ set this variable in your `.env`
 
 Laravel 5.0 should be compatible up to tag 1.1.1
 
-We have stopped development on the Laravel 4 version of this plugin for now. We are welcoming pull requests, however! Feel free to use any tag below 1.0.0 for Laravel 4 compatible versions.
+We have stopped development on the Laravel 4 version of this plugin for now.
+We are welcoming pull requests, however!
+Feel free to use any tag below 1.0.0 for Laravel 4 compatible versions.
 
 [1]:https://getcomposer.org/
 [2]:https://codeclimate.com/github/StudentAffairsUWM/Laravel-Shibboleth-Service-Provider
@@ -72,3 +106,6 @@ We have stopped development on the Laravel 4 version of this plugin for now. We 
 [4]:https://github.com/tymondesigns/jwt-auth
 [11]:https://travis-ci.org/uawcob/Laravel-Shibboleth-Service-Provider
 [12]:https://travis-ci.org/uawcob/Laravel-Shibboleth-Service-Provider.svg?branch=master
+[13]:https://github.com/mrclay/shibalike
+[14]:https://laravel.com/docs/5.4/eloquent-relationships#many-to-many
+[15]:./src/database/migrations/2017_02_24_100000_create_entitlement_user_table.php

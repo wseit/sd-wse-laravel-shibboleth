@@ -31,13 +31,12 @@ class ShibbolethServiceProvider extends ServiceProvider
             return new Providers\ShibbolethUserProvider($app['config']['auth.providers.users.model']);
         });
 
-        // Publish the configuration, migrations, and User / Group models
+        // Publish the configuration, migrations, and views
         $this->publishes([
             __DIR__ . '/../../config/shibboleth.php' => config_path('shibboleth.php'),
-            __DIR__ . '/../../database/migrations/'  => base_path('/database/migrations'),
+            __DIR__ . '/../../database/migrations/2017_02_24_000000_create_entitlements_table.php'  => base_path('/database/migrations/2017_02_24_000000_create_entitlements_table.php'),
+            __DIR__ . '/../../database/migrations/2017_02_24_100000_create_entitlement_user_table.php'  => base_path('/database/migrations/2017_02_24_100000_create_entitlement_user_table.php'),
             __DIR__ . '/../../resources/views/'      => base_path('/resources/views'),
-            __DIR__ . '/../../app/User.php'          => base_path('/app/User.php'),
-            __DIR__ . '/../../app/Group.php'         => base_path('/app/Group.php'),
         ]);
 
         Route::group(['middleware' => 'web'], function () {

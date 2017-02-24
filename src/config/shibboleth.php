@@ -72,8 +72,9 @@ return array(
     'local_login_user_field'   => 'local_email',
     'local_login_pass_field'   => 'local_password',
     'idp_login_email'          => 'mail',
-    'idp_login_first'          => 'givenName',
-    'idp_login_last'           => 'sn',
+    'idp_login_name'           => 'displayName',
+    'idp_login_first_name'     => 'givenName',
+    'idp_login_last_name'      => 'sn',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,6 +86,5 @@ return array(
      */
 
     'add_new_users'            => true, // Should new users be added automatically if they do not exist?
-    'shibboleth_group'         => '1', // What group should the new users be automatically added to?
 
 );

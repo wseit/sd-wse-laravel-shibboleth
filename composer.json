@@ -32,8 +32,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "StudentAffairsUwm\\Shibboleth\\Tests\\": "tests/",
-            "App\\": "src/app"
+            "StudentAffairsUwm\\Shibboleth\\Tests\\Stubs\\": "tests/setup/Stubs",
+            "App\\": "tests/setup/app"
         }
     },
     "minimum-stability": "stable",

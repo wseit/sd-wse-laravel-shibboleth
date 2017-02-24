@@ -71,8 +71,9 @@ class ShibbolethUserProvider implements UserProviderInterface
      */
     public function validateCredentials(Authenticatable $user, array $creds)
     {
-        return (isset($creds['type']) && $creds['type'] === 'shibboleth')
-            ? true : Hash::check($creds['password'], $user->getAuthPassword());
+        return isset($creds['password'])
+            ? Hash::check($creds['password'], $user->getAuthPassword())
+            : true;
     }
 
     /**

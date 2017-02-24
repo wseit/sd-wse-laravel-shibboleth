@@ -88,7 +88,7 @@ class ShibbolethController extends Controller
 
         $userClass  = config('auth.providers.users.model');
 
-        if (Auth::attempt(array('email' => $email, 'password' => $password, 'type' => 'local'), true)) {
+        if (Auth::attempt(array('email' => $email, 'password' => $password), true)) {
             $user = $userClass::where('email', '=', $email)->first();
 
             $viewOrRedirect = config('shibboleth.local_authenticated');
@@ -111,28 +111,23 @@ class ShibbolethController extends Controller
     public function idpAuthorize()
     {
         $email     = $this->getServerVariable(config('shibboleth.idp_login_email'));
-        $firstName = $this->getServerVariable(config('shibboleth.idp_login_first'));
-        $lastName  = $this->getServerVariable(config('shibboleth.idp_login_last'));
+        $name      = $this->getServerVariable(config('shibboleth.idp_login_name'));
+        $firstName = $this->getServerVariable(config('shibboleth.idp_login_first_name'));
+        $lastName  = $this->getServerVariable(config('shibboleth.idp_login_last_name'));
 
-        $userClass  = config('auth.providers.users.model');
-        $groupClass = config('auth.providers.users.group_model');
+        $userClass  = config('auth.providers.users.model', 'App\User');
 
         // Attempt to login with the email, if success, update the user model
         // with data from the Shibboleth headers (if present)
-        // TODO: This can be simplified a lot
-        if (Auth::attempt(array('email' => $email, 'type' => 'shibboleth'), true)) {
+        if (Auth::attempt(array('email' => $email), true)) {
             $user = $userClass::where('email', '=', $email)->first();
 
             // Update the model as necessary
-            if (isset($firstName)) {
-                $user->first_name = $firstName;
-            }
-
-            if (isset($lastName)) {
-                $user->last_name = $lastName;
-            }
-
-            $user->save();
+            $user->update([
+                'name'       => $name,
+                'first_name' => $firstName,
+                'last_name'  => $lastName,
+            ]);
 
             $viewOrRedirect = config('shibboleth.shibboleth_authenticated');
 
@@ -143,26 +138,15 @@ class ShibbolethController extends Controller
             return $this->viewOrRedirect($viewOrRedirect);
         }
 
-        //Add user to group and send through auth.
+        // Add user and send through auth.
         if (isset($email) && config('shibboleth.add_new_users', true)) {
             $user = $userClass::create(array(
                 'email'      => $email,
-                'type'       => 'shibboleth',
+                'name'       => $name,
                 'first_name' => $firstName,
                 'last_name'  => $lastName,
-                'enabled'    => 0,
+                'password'   => 'shibboleth',
             ));
-
-            try {
-                $group = $groupClass::findOrFail(config('shibboleth.shibboleth_group'));
-            } catch (ModelNotFoundException $e) {
-                $msg = "Could not find " . $groupClass
-                    . " with primary key " . config('shibboleth.shibboleth_group')
-                    . "! Check your Laravel-Shibboleth configuration.";
-                throw new \RuntimeException($msg, 900, $e);
-            }
-
-            $group->users()->save($user);
         }
 
         // this is simply brings us back to the session-setting branch directly above
