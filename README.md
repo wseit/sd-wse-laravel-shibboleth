@@ -82,7 +82,8 @@ so if you have a custom configuration, then you will need to manually edit the
 in order to match your custom table name and foreign key relationship.
 
 Now users may login via Shibboleth by going to `https://example.com/idp`
-and logout using `https://example.com/logout`
+and logout using `https://example.com/logout` so you can provide a custom link
+or redirect based on email address in the login form.
 
 You may configure server variable mappings in `config/shibboleth.php` such as
 the user's first name, last name, entitlements, etc. You can take a look at them
