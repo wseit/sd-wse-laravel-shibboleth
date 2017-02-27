@@ -63,19 +63,19 @@ class ShibbolethController extends Controller
     {
         if (config('shibboleth.emulate_idp') === true) {
             return Redirect::to(action('\\' . __CLASS__ . '@emulateLogin')
-                . '?target=' .  action('\\' . __CLASS__ . '@idpAuthorize'));
+                . '?target=' .  action('\\' . __CLASS__ . '@idpAuthenticate'));
         }
 
         return Redirect::to('https://' . Request::server('SERVER_NAME')
             . ':' . Request::server('SERVER_PORT') . config('shibboleth.idp_login')
-            . '?target=' . action('\\' . __CLASS__ . '@idpAuthorize'));
+            . '?target=' . action('\\' . __CLASS__ . '@idpAuthenticate'));
     }
 
     /**
-     * Setup authorization based on returned server variables
+     * Setup authentication based on returned server variables
      * from the IdP.
      */
-    public function idpAuthorize()
+    public function idpAuthenticate()
     {
         $email     = $this->getServerVariable(config('shibboleth.idp_login_email'));
         $name      = $this->getServerVariable(config('shibboleth.idp_login_name'));
@@ -169,7 +169,7 @@ class ShibbolethController extends Controller
     }
 
     /**
-     * Emulate the 'authorization' via Shibalike
+     * Emulate the 'authentication' via Shibalike
      */
     public function emulateIdp()
     {

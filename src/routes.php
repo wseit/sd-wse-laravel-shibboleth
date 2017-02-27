@@ -5,7 +5,7 @@ Route::get('/idp', 'StudentAffairsUwm\Shibboleth\Controllers\ShibbolethControlle
 // Logout Route (Shibboleth and Local)
 Route::get('/logout', 'StudentAffairsUwm\Shibboleth\Controllers\ShibbolethController@destroy');
 // Shibboleth IdP Callback
-Route::get('/authorize', 'StudentAffairsUwm\Shibboleth\Controllers\ShibbolethController@idpAuthorize');
+Route::get('/authenticate', 'StudentAffairsUwm\Shibboleth\Controllers\ShibbolethController@idpAuthenticate');
 
 // Login Callback (Emulated)
 Route::get('emulated/idp', 'StudentAffairsUwm\Shibboleth\Controllers\ShibbolethController@emulateIdp');
