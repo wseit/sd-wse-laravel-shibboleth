@@ -28,7 +28,7 @@ users, then use laravel's built-in auth system.
 
 Use [composer][1] to require the latest release into your project:
 
-    $ composer require saitswebuwm/shibboleth
+    $ composer require razorbacks/laravel-shibboleth
 
 Then, append the following line inside your `/config/app.php` file within the
 `Providers` array.
@@ -134,8 +134,8 @@ We are welcoming pull requests, however!
 Feel free to use any tag below 1.0.0 for Laravel 4 compatible versions.
 
 [1]:https://getcomposer.org/
-[2]:https://codeclimate.com/github/StudentAffairsUWM/Laravel-Shibboleth-Service-Provider
-[3]:https://codeclimate.com/github/StudentAffairsUWM/Laravel-Shibboleth-Service-Provider/badges/gpa.svg
+[2]:https://codeclimate.com/github/razorbacks/laravel-shibboleth
+[3]:https://codeclimate.com/github/razorbacks/laravel-shibboleth/badges/gpa.svg
 [4]:https://github.com/tymondesigns/jwt-auth
 [11]:https://travis-ci.org/uawcob/Laravel-Shibboleth-Service-Provider
 [12]:https://travis-ci.org/uawcob/Laravel-Shibboleth-Service-Provider.svg?branch=master
