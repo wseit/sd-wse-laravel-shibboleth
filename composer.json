@@ -1,5 +1,5 @@
 {
-    "name": "studentaffairsuwm/shibboleth",
+    "name": "razorbacks/laravel-shibboleth",
     "description": "Enable basic Shibboleth support for Laravel 5.x",
     "authors": [
         {
@@ -16,7 +16,7 @@
         },
         {
             "name": "Jeff Puckett",
-            "email": "jeff@jeffpuckett.com"
+            "email": "jpucket@uark.edu"
         }
     ],
     "require": {
