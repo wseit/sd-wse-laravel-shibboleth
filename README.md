@@ -137,8 +137,8 @@ Feel free to use any tag below 1.0.0 for Laravel 4 compatible versions.
 [2]:https://codeclimate.com/github/razorbacks/laravel-shibboleth
 [3]:https://codeclimate.com/github/razorbacks/laravel-shibboleth/badges/gpa.svg
 [4]:https://github.com/tymondesigns/jwt-auth
-[11]:https://travis-ci.org/uawcob/Laravel-Shibboleth-Service-Provider
-[12]:https://travis-ci.org/uawcob/Laravel-Shibboleth-Service-Provider.svg?branch=master
+[11]:https://travis-ci.org/razorbacks/laravel-shibboleth
+[12]:https://travis-ci.org/razorbacks/laravel-shibboleth.svg?branch=master
 [13]:https://github.com/mrclay/shibalike
 [14]:https://laravel.com/docs/5.4/eloquent-relationships#many-to-many
 [15]:./src/database/migrations/2017_02_24_100000_create_entitlement_user_table.php
