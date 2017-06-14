@@ -24,11 +24,11 @@ into explaining how to set that up.
 If you would like to allow local registration as well as authenticate shibboleth
 users, then use laravel's built-in auth system.
 
-    $ php artisan make:auth
+    php artisan make:auth
 
 Use [composer][1] to require the latest release into your project:
 
-    $ composer require razorbacks/laravel-shibboleth
+    composer require razorbacks/laravel-shibboleth
 
 Then, append the following line inside your `config/app.php` file within the
 `Providers` array.
@@ -39,7 +39,7 @@ StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider::class,
 
 Publish the default configuration file, migrations, and views:
 
-    $ php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider"
+    php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider"
 
 > University of Arkansas Users:
 >
@@ -51,7 +51,7 @@ Publish the default configuration file, migrations, and views:
 
 Run the database migrations:
 
-    $ php artisan migrate
+    php artisan migrate
 
 Once the migrations have run successfully, change the driver to `shibboleth` in
 your `config/auth.php` file.
@@ -113,7 +113,7 @@ authorization can be delegated with inherent separation of concerns.
 You will need to add entitlements in which you are interested to the database.
 This can easily be accomplished with artisan tinker.
 
-    $ php artisan tinker
+    php artisan tinker
 
 ```php
 >>> $entitlement = new StudentAffairsUwm\Shibboleth\Entitlement;
