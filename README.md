@@ -21,11 +21,6 @@ into explaining how to set that up.
 
 ## Installation ##
 
-If you would like to allow local registration as well as authenticate shibboleth
-users, then use laravel's built-in auth system.
-
-    php artisan make:auth
-
 Use [composer][1] to require the latest release into your project:
 
     composer require razorbacks/laravel-shibboleth
@@ -137,6 +132,15 @@ This can easily be accomplished with artisan tinker.
 ```
 
 Now you can draft [policies and gates][16] around these entitlements.
+
+## Local Users
+
+This was designed to work side-by-side with the native authentication system
+for projects where you want to have both shibboleth and local users.
+If you would like to allow local registration as well as authenticate shibboleth
+users, then use laravel's built-in auth system.
+
+    php artisan make:auth
 
 ## JWTAuth Tokens ##
 
