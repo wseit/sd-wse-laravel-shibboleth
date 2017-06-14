@@ -93,6 +93,18 @@ Now users may login via Shibboleth by going to `https://example.com/idp`
 and logout using `https://example.com/logout` so you can provide a custom link
 or redirect based on email address in the login form.
 
+```php
+@if (Auth::guest())
+    <li><a href="/idp">Login</a></li>
+@else
+    <li>
+        <a href="/logout">
+            Logout {{ Auth::user()->name }}
+        </a>
+    </li>
+@endif
+```
+
 You may configure server variable mappings in `config/shibboleth.php` such as
 the user's first name, last name, entitlements, etc. You can take a look at them
 by reading what's been populated into the `$_SERVER` variable after authentication.
