@@ -30,7 +30,7 @@ Use [composer][1] to require the latest release into your project:
 
     $ composer require razorbacks/laravel-shibboleth
 
-Then, append the following line inside your `/config/app.php` file within the
+Then, append the following line inside your `config/app.php` file within the
 `Providers` array.
 
 ```php
@@ -46,7 +46,7 @@ Run the database migrations:
     $ php artisan migrate
 
 Once the migrations have run successfully, change the driver to `shibboleth` in
-your `/config/auth.php` file.
+your `config/auth.php` file.
 
 ```php
 'providers' => [
