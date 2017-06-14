@@ -41,6 +41,14 @@ Publish the default configuration file, migrations, and views:
 
     $ php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider"
 
+> University of Arkansas Users:
+>
+> To also logout with the IdP, set the the following in `config/shibboleth.php`
+>
+> ```php
+> 'idp_logout' => '/Shibboleth.sso/Logout?return=https%3A%2F%2Fidp.uark.edu%2Fidp%2Fexit.jsp',
+> ```
+
 Run the database migrations:
 
     $ php artisan migrate
