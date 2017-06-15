@@ -13,6 +13,8 @@ trait Setup
 
         parent::setUp();
 
+        config(['shibboleth.idp_login_entitlement' => 'entitlement']);
+
         $this->artisan('migrate:refresh', ['--database' => 'testing']);
     }
 
