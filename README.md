@@ -116,6 +116,10 @@ if (Entitlement::has($entitlement)) {
 }
 ```
 
+Note that this skips the database and simply checks the `$_SERVER` variable,
+so it will not work for multi-source authentication systems. If you're using
+shared authorization schemas, then you'll have to use the eloquent methods.
+
 ## Local Users
 
 This was designed to work side-by-side with the native authentication system
@@ -149,6 +153,14 @@ This can easily be accomplished with artisan tinker.
 ```
 
 Now you can draft [policies and gates][16] around these entitlements.
+
+```php
+$entitlement = 'urn:mace:uark.edu:ADGroups:Computing Services:Something';
+
+if (Auth::user()->entitlements->contains('name', $entitlement)) {
+    // authorize something
+}
+```
 
 ## JWTAuth Tokens ##
 
