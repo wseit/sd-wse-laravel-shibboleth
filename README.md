@@ -90,13 +90,11 @@ or redirect based on email address in the login form.
 
 ```php
 @if (Auth::guest())
-    <li><a href="/idp">Login</a></li>
+    <a href="/idp">Login</a>
 @else
-    <li>
-        <a href="/logout">
-            Logout {{ Auth::user()->name }}
-        </a>
-    </li>
+    <a href="/logout">
+        Logout {{ Auth::user()->name }}
+    </a>
 @endif
 ```
 
