@@ -121,8 +121,8 @@ if (Entitlement::has($entitlement)) {
 ## Local Users
 
 This was designed to work side-by-side with the native authentication system
-for projects where you want to have both shibboleth and local users.
-If you would like to allow local registration as well as authenticate shibboleth
+for projects where you want to have both Shibboleth and local users.
+If you would like to allow local registration as well as authenticate Shibboleth
 users, then use laravel's built-in auth system.
 
     php artisan make:auth
