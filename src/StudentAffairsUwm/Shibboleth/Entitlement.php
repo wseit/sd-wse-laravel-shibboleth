@@ -4,6 +4,7 @@ namespace StudentAffairsUwm\Shibboleth;
 
 use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
+use Request;
 
 class Entitlement extends Model
 {
@@ -32,5 +33,17 @@ class Entitlement extends Model
         }
 
         return static::whereIn('name', explode(';', $entitlements))->get();
+    }
+
+    /**
+     * Returns TRUE if current user has entitlement.
+     * NOTE: does not work with Shibalike. Only with production Shibboleth.
+     *
+     * @param  string $entitlement
+     * @return bool
+     */
+    public static function has($entitlement)
+    {
+        return strpos(Request::server('entitlement'), $entitlement) !== false;
     }
 }

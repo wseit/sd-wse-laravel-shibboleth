@@ -108,7 +108,26 @@ by reading what's been populated into the `$_SERVER` variable after authenticati
 <?php print_r($_SERVER);
 ```
 
-## Groups and Entitlements ##
+You can check for an entitlement string of the current user statically:
+
+```php
+$entitlement = 'urn:mace:uark.edu:ADGroups:Computing Services:Something';
+
+if (Entitlement::has($entitlement)) {
+    // authorize something
+}
+```
+
+## Local Users
+
+This was designed to work side-by-side with the native authentication system
+for projects where you want to have both shibboleth and local users.
+If you would like to allow local registration as well as authenticate shibboleth
+users, then use laravel's built-in auth system.
+
+    php artisan make:auth
+
+## Groups and Entitlements
 
 The old 1.x versions required a base `App\Group` model, but this interfered with
 native authorization policies not dependent on Shibboleth. Now a new model with
@@ -132,15 +151,6 @@ This can easily be accomplished with artisan tinker.
 ```
 
 Now you can draft [policies and gates][16] around these entitlements.
-
-## Local Users
-
-This was designed to work side-by-side with the native authentication system
-for projects where you want to have both shibboleth and local users.
-If you would like to allow local registration as well as authenticate shibboleth
-users, then use laravel's built-in auth system.
-
-    php artisan make:auth
 
 ## JWTAuth Tokens ##
 
