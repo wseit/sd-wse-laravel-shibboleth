@@ -59,4 +59,12 @@ class EntitlementTest extends TestCase
 
         $this->assertFalse(Entitlement::has($entitlement));
     }
+
+    public function test_checks_for_complete_entitlement()
+    {
+        // sub-string is missing trailing 'B'
+        $entitlement = 'urn:mace:uark.edu:ADGroups:Computing Services:Something:Somesuch-WCO';
+
+        $this->assertFalse(Entitlement::has($entitlement));
+    }
 }
