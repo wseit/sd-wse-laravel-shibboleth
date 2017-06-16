@@ -1,4 +1,6 @@
-<?php namespace StudentAffairsUwm\Shibboleth;
+<?php
+
+namespace StudentAffairsUwm\Shibboleth;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
@@ -7,11 +9,20 @@ use Illuminate\Support\Facades\Route;
 class ShibbolethServiceProvider extends ServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
+     * Bootstrap any application services.
      *
-     * @var bool
+     * @return void
      */
-    protected $defer = false;
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__ . '/../../config/shibboleth.php' => config_path('shibboleth.php'),
+            __DIR__ . '/../../database/migrations/2017_02_24_000000_create_entitlements_table.php'  => database_path('migrations/2017_02_24_000000_create_entitlements_table.php'),
+            __DIR__ . '/../../database/migrations/2017_02_24_100000_create_entitlement_user_table.php'  => database_path('migrations/2017_02_24_100000_create_entitlement_user_table.php'),
+        ]);
+
+        $this->loadRoutesFrom(__DIR__ . '/../../routes/shibboleth.php');
+    }
 
     /**
      * Register the service provider.
@@ -30,27 +41,5 @@ class ShibbolethServiceProvider extends ServiceProvider
         $this->app['auth']->provider('shibboleth', function ($app) {
             return new Providers\ShibbolethUserProvider($app['config']['auth.providers.users.model']);
         });
-
-        // Publish the configuration, migrations, and views
-        $this->publishes([
-            __DIR__ . '/../../config/shibboleth.php' => config_path('shibboleth.php'),
-            __DIR__ . '/../../database/migrations/2017_02_24_000000_create_entitlements_table.php'  => base_path('/database/migrations/2017_02_24_000000_create_entitlements_table.php'),
-            __DIR__ . '/../../database/migrations/2017_02_24_100000_create_entitlement_user_table.php'  => base_path('/database/migrations/2017_02_24_100000_create_entitlement_user_table.php'),
-            __DIR__ . '/../../resources/views/'      => base_path('/resources/views'),
-        ]);
-
-        Route::group(['middleware' => 'web'], function () {
-            require __DIR__ . '/../../routes.php';
-        });
-    }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return [];
     }
 }

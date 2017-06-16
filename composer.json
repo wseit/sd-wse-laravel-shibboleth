@@ -40,5 +40,12 @@
     "require-dev": {
         "phpunit/phpunit": "^6.0",
         "orchestra/testbench": "3.4.*"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "StudentAffairsUwm\\Shibboleth\\ShibbolethServiceProvider"
+            ]
+        }
     }
 }

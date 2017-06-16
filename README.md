@@ -25,16 +25,29 @@ Use [composer][1] to require the latest release into your project:
 
     composer require razorbacks/laravel-shibboleth
 
-Then, append the following line inside your `config/app.php` file within the
-`Providers` array.
+If you're running Laravel >= 5.5, then you can skip this step, otherwise
+you will need to manually register the service provider in your `config/app.php`
+file within the `Providers` array.
 
 ```php
 StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider::class,
 ```
 
-Publish the default configuration file, migrations, and views:
+If you you would like to use the emulated IdP via shibalike, then you will need
+to manually register it on any version - this is not automatically loaded even
+in Laravel 5.5.
+
+```php
+StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider::class,
+```
+
+Publish the default configuration file and entitlement migrations:
 
     php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider"
+
+You can also publish the views for the shibalike emulated IdP login:
+
+    php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider"
 
 > University of Arkansas Users:
 >

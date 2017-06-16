@@ -1,4 +1,5 @@
 <?php
+
 namespace StudentAffairsUwm\Shibboleth\Controllers;
 
 use Illuminate\Auth\GenericUser;
