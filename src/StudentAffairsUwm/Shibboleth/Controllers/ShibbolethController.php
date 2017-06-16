@@ -77,42 +77,36 @@ class ShibbolethController extends Controller
      */
     public function idpAuthenticate()
     {
-        $email     = $this->getServerVariable(config('shibboleth.idp_login_email'));
-        $name      = $this->getServerVariable(config('shibboleth.idp_login_name'));
-        $firstName = $this->getServerVariable(config('shibboleth.idp_login_first_name'));
-        $lastName  = $this->getServerVariable(config('shibboleth.idp_login_last_name'));
+        foreach (config('shibboleth.user') as $local => $server) {
+            $map[$local] = $this->getServerVariable($server);
+        }
+
+        if (empty($map['email'])) {
+            return abort(403, 'Unauthorized');
+        }
 
         $userClass  = config('auth.providers.users.model', 'App\User');
 
         // Attempt to login with the email, if success, update the user model
         // with data from the Shibboleth headers (if present)
-        if (Auth::attempt(array('email' => $email), true)) {
-            $user = $userClass::where('email', '=', $email)->first();
+        if (Auth::attempt(array('email' => $map['email']), true)) {
+            $user = $userClass::where('email', '=', $map['email'])->first();
 
             // Update the model as necessary
-            $user->update([
-                'name'       => $name,
-                'first_name' => $firstName,
-                'last_name'  => $lastName,
-            ]);
+            $user->update($map);
         }
 
         // Add user and send through auth.
-        elseif (isset($email) && config('shibboleth.add_new_users', true)) {
-            $user = $userClass::create(array(
-                'email'      => $email,
-                'name'       => $name,
-                'first_name' => $firstName,
-                'last_name'  => $lastName,
-                'password'   => 'shibboleth',
-            ));
+        elseif (config('shibboleth.add_new_users', true)) {
+            $map['password'] = 'shibboleth';
+            $user = $userClass::create($map);
         }
 
         else {
             return abort(403, 'Unauthorized');
         }
 
-        $entitlementString = $this->getServerVariable(config('shibboleth.idp_login_entitlement'));
+        $entitlementString = $this->getServerVariable(config('shibboleth.entitlement'));
         $entitlements = Entitlement::findInString($entitlementString);
         $user->entitlements()->sync($entitlements);
 

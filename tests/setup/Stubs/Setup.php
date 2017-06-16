@@ -2,6 +2,8 @@
 
 namespace StudentAffairsUwm\Shibboleth\Tests\Stubs;
 
+use StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider;
+
 trait Setup
 {
     /**
@@ -10,6 +12,12 @@ trait Setup
     public function setUp()
     {
         $_SERVER['entitlement'] = 'urn:mace:dir:entitlement:common-lib-terms;urn:mace:uark.edu:ADGroups:Computing Services:Something:Somesuch-WCOB;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:Old Security Groups:WCOB-TechCenter;urn:mace:uark.edu:ADGroups:Exchange Resource Units:UITS (University IT Services):UITS: TechPartners;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:WCOB-Intranet;urn:mace:uark.edu:ADGroups:walton:Groups:linux02_sudoers;urn:mace:uark.edu:ADGroups:Walton College:Security Groups:WCOB-Users;urn:mace:uark.edu:ADGroups:Exchange Resource Units:WCOB (Walton College):WCOB: Conference Team';
+
+        $_SERVER['mail'] = 'jeff@example.org';
+        $_SERVER['displayName'] = 'jeff';
+        $_SERVER['givenName'] = 'Jeff';
+        $_SERVER['sn'] = 'Puckett';
+        $_SERVER['employeeNumber'] = '100000001';
 
         parent::setUp();
 
@@ -25,7 +33,31 @@ trait Setup
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('shibboleth.entitlement', 'entitlement');
+        $app['config']->set('shibboleth', require __DIR__.'/../../../src/config/shibboleth.php');
+
+        $app['config']->set('auth', [
+            'defaults' => [
+                'guard' => 'web',
+                'passwords' => 'users',
+            ],
+            'guards' => [
+                'web' => [
+                    'driver' => 'session',
+                    'provider' => 'users',
+                ],
+
+                'api' => [
+                    'driver' => 'token',
+                    'provider' => 'users',
+                ],
+            ],
+            'providers' => [
+                'users' => [
+                    'driver' => 'shibboleth',
+                    'model' => \App\User::class,
+                ],
+           ],
+        ]);
 
         $app['config']->set('database.default', env('DB_CONNECTION', 'sqlite'));
 
@@ -64,6 +96,7 @@ trait Setup
     {
         return [
             ServiceProvider::class,
+            ShibbolethServiceProvider::class,
         ];
     }
 
