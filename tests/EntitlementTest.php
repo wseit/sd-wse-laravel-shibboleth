@@ -37,6 +37,9 @@ class EntitlementTest extends TestCase
 
         $entitlements = Entitlement::findInString($entitlementString)->toArray();
 
+        // sqlite returns different order
+        sort($entitlements);
+
         $this->assertEquals($expected, $entitlements);
     }
 

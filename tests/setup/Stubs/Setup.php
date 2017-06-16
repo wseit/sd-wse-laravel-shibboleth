@@ -13,9 +13,7 @@ trait Setup
 
         parent::setUp();
 
-        config(['shibboleth.idp_login_entitlement' => 'entitlement']);
-
-        $this->artisan('migrate:refresh', ['--database' => 'testing']);
+        $this->artisan('migrate:refresh');
     }
 
     /**
@@ -27,19 +25,28 @@ trait Setup
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('database.default', 'testing');
-        $app['config']->set('database.connections.testing', [
+        $app['config']->set('shibboleth.entitlement', 'entitlement');
+
+        $app['config']->set('database.default', env('DB_CONNECTION', 'sqlite'));
+
+        $app['config']->set('database.connections.mysql', [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE'),
-            'username' => env('DB_USERNAME'),
-            'password' => env('DB_PASSWORD'),
+            'database' => env('DB_DATABASE', 'travis'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+        ]);
+
+        $app['config']->set('database.connections.sqlite', [
+            'driver'   => 'sqlite',
+            'database' => ':memory:',
+            'prefix'   => '',
         ]);
     }
 

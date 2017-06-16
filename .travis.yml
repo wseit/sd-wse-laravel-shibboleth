@@ -3,11 +3,17 @@ matrix:
   fast_finish: true
   include:
   - php: nightly
-    env: PHPUNIT=true
+    env:
+        - PHPUNIT=true
+        - DB_CONNECTION=mysql
   - php: 7.1
-    env: PHPUNIT=true
+    env:
+        - PHPUNIT=true
+        - DB_CONNECTION=mysql
   - php: 7.0
-    env: PHPUNIT=true
+    env:
+        - PHPUNIT=true
+        - DB_CONNECTION=mysql
   - php: 5.6
     env: PHPUNIT=false
 before_install:

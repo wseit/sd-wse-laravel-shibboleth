@@ -63,11 +63,16 @@ return array(
     |
      */
 
-    'idp_login_email'       => 'mail',
-    'idp_login_name'        => 'displayName',
-    'idp_login_first_name'  => 'givenName',
-    'idp_login_last_name'   => 'sn',
-    'idp_login_entitlement' => 'entitlement',
+    'entitlement' => 'entitlement',
+
+    'user' => [
+        // fillable user model attribute => server variable
+        'email'       => 'mail',
+        'name'        => 'displayName',
+        'first_name'  => 'givenName',
+        'last_name'   => 'sn',
+        'student_id'  => 'employeeNumber',
+    ],
 
     /*
     |--------------------------------------------------------------------------

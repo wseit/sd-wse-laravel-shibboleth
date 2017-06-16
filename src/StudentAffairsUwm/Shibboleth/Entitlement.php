@@ -44,7 +44,7 @@ class Entitlement extends Model
      */
     public static function has($entitlement)
     {
-        $variable = config('shibboleth.idp_login_entitlement');
+        $variable = config('shibboleth.entitlement');
 
         foreach (explode(';', Request::server($variable)) as $given) {
             if ($given === $entitlement) {
