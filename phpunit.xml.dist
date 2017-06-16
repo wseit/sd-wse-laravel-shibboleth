@@ -27,7 +27,7 @@
         <env name="QUEUE_DRIVER" value="sync"/>
     </php>
     <logging>
-        <log type="coverage-html" target="./coverage"
+        <log type="coverage-html" target="./tests/coverage"
             lowUpperBound="35"   highLowerBound="90"/>
         <log type="coverage-text" target="php://stdout"
             showUncoveredFiles="false"/>
