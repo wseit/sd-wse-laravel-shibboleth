@@ -15,6 +15,7 @@ use Illuminate\Console\AppNamespaceDetectorTrait;
 use JWTAuth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use StudentAffairsUwm\Shibboleth\Entitlement;
+use StudentAffairsUwm\Shibboleth\ConfigurationBackwardsCompatabilityMapper;
 
 class ShibbolethController extends Controller
 {
@@ -78,6 +79,10 @@ class ShibbolethController extends Controller
      */
     public function idpAuthenticate()
     {
+        if (empty(config('shibboleth.user'))) {
+            ConfigurationBackwardsCompatabilityMapper::map();
+        }
+
         foreach (config('shibboleth.user') as $local => $server) {
             $map[$local] = $this->getServerVariable($server);
         }
