@@ -124,7 +124,7 @@ class ShibbolethController extends Controller
             $route .= $this->tokenizeRedirect($user, ['auth_type' => 'idp']);
         }
 
-        return redirect($route);
+        return redirect()->intended($route);
     }
 
     /**
