@@ -112,6 +112,8 @@ class ShibbolethController extends Controller
             return abort(403, 'Unauthorized');
         }
 
+        Session::regenerate();
+
         $entitlementString = $this->getServerVariable(config('shibboleth.entitlement'));
         $entitlements = Entitlement::findInString($entitlementString);
         $user->entitlements()->sync($entitlements);
