@@ -120,7 +120,7 @@ class ShibbolethController extends Controller
 
         $route = config('shibboleth.authenticated');
 
-        if (env('JWTAUTH') === true) {
+        if (config('jwtauth') === true) {
             $route .= $this->tokenizeRedirect($user, ['auth_type' => 'idp']);
         }
 
@@ -135,7 +135,7 @@ class ShibbolethController extends Controller
         Auth::logout();
         Session::flush();
 
-        if (env('JWTAUTH')) {
+        if (config('jwtauth')) {
             $token = JWTAuth::parseToken();
             $token->invalidate();
         }
