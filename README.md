@@ -19,6 +19,9 @@ In order to use this plugin, we assume you already have a pre-existing
 Shibboleth SP and Shibboleth IdP configured. This does not (and will not) go
 into explaining how to set that up.
 
+However, this might be helpful:
+https://github.com/razorbacks/ubuntu-authentication/tree/master/shibboleth
+
 ## Installation ##
 
 Use [composer][1] to require the latest release into your project:
