@@ -115,7 +115,7 @@ class ShibbolethController extends Controller
         Session::regenerate();
 
         $entitlementString = $this->getServerVariable(config('shibboleth.entitlement'));
-        if ($entitlementString) {
+        if (!empty($entitlementString)) {
             $entitlements = Entitlement::findInString($entitlementString);
             $user->entitlements()->sync($entitlements);
         }
