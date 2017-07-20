@@ -115,8 +115,10 @@ class ShibbolethController extends Controller
         Session::regenerate();
 
         $entitlementString = $this->getServerVariable(config('shibboleth.entitlement'));
-        $entitlements = Entitlement::findInString($entitlementString);
-        $user->entitlements()->sync($entitlements);
+        if ($entitlementString) {
+            $entitlements = Entitlement::findInString($entitlementString);
+            $user->entitlements()->sync($entitlements);
+        }
 
         $route = config('shibboleth.authenticated');
 
@@ -184,7 +186,7 @@ class ShibbolethController extends Controller
             $userAttrs = $this->idp->fetchAttrs($username);
             if ($userAttrs) {
                 $this->idp->markAsAuthenticated($username);
-                $this->idp->redirect('/idp');
+                $this->idp->redirect();
             }
 
             $data['error'] = 'Incorrect username and/or password';
