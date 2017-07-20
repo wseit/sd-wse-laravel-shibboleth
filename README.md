@@ -101,15 +101,15 @@ so if you have a custom configuration, then you will need to manually edit the
 [`database/migrations/2017_02_24_100000_create_entitlement_user_table.php`][15]
 in order to match your custom table name and foreign key relationship.
 
-Now users may login via Shibboleth by going to `https://example.com/idp`
-and logout using `https://example.com/logout` so you can provide a custom link
+Now users may login via Shibboleth by going to `https://example.com/shibboleth-login`
+and logout using `https://example.com/shibboleth-logout` so you can provide a custom link
 or redirect based on email address in the login form.
 
 ```php
 @if (Auth::guest())
-    <a href="/idp">Login</a>
+    <a href="/shibboleth-login">Login</a>
 @else
-    <a href="/logout">
+    <a href="/shibboleth-logout">
         Logout {{ Auth::user()->name }}
     </a>
 @endif
