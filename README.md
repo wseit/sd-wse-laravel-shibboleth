@@ -4,8 +4,9 @@ Laravel Shibboleth Service Provider
 This package provides an easy way to implement Shibboleth Authentication for
 Laravel 5.4
 
-[![Code Climate][3]][2]
 [![Build Status][12]][11]
+[![Code Climate][3]][2]
+[![Code Coverage][8]][7]
 
 ## Features ##
 
@@ -197,6 +198,8 @@ Feel free to use any tag below 1.0.0 for Laravel 4 compatible versions.
 [2]:https://codeclimate.com/github/razorbacks/laravel-shibboleth
 [3]:https://codeclimate.com/github/razorbacks/laravel-shibboleth/badges/gpa.svg
 [4]:https://github.com/tymondesigns/jwt-auth
+[7]:https://codecov.io/gh/razorbacks/laravel-shibboleth/branch/master
+[8]:https://img.shields.io/codecov/c/github/razorbacks/laravel-shibboleth/master.svg
 [11]:https://travis-ci.org/razorbacks/laravel-shibboleth
 [12]:https://travis-ci.org/razorbacks/laravel-shibboleth.svg?branch=master
 [13]:https://github.com/mrclay/shibalike
