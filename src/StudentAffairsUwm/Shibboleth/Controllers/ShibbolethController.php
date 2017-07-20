@@ -91,7 +91,7 @@ class ShibbolethController extends Controller
             return abort(403, 'Unauthorized');
         }
 
-        $userClass  = config('auth.providers.users.model', 'App\User');
+        $userClass = config('auth.providers.users.model', 'App\User');
 
         // Attempt to login with the email, if success, update the user model
         // with data from the Shibboleth headers (if present)
