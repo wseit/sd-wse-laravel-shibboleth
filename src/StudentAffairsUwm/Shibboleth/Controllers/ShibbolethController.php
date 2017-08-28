@@ -106,6 +106,7 @@ class ShibbolethController extends Controller
         elseif (config('shibboleth.add_new_users', true)) {
             $map['password'] = 'shibboleth';
             $user = $userClass::create($map);
+            Auth::login($user);
         }
 
         else {
