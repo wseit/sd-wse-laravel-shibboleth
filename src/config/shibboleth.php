@@ -25,6 +25,8 @@ return array(
     | homestead or your own Vagrant box, you can emulate a Shibboleth
     | environment with the help of Shibalike.
     |
+    | The password is the same as the username.
+    |
     | Do not use this in production for literally any reason.
     |
      */

@@ -45,6 +45,8 @@ in Laravel 5.5.
 StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider::class,
 ```
 
+*Note* that the password is the same as the username for shibalike.
+
 Publish the default configuration file and entitlement migrations:
 
     php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider"
