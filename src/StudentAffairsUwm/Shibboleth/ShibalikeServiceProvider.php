@@ -16,7 +16,7 @@ class ShibalikeServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../../resources/views/Shibalike/' => resource_path('views/vendor/shibalike'),
+            __DIR__ . '/../../resources/views/shibalike/' => resource_path('views/vendor/shibalike'),
         ]);
 
         $this->loadRoutesFrom(__DIR__ . '/../../routes/shibalike.php');
