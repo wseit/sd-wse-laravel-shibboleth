@@ -186,7 +186,7 @@ class ShibbolethController extends Controller
             $userAttrs = $this->idp->fetchAttrs($username);
             if ($userAttrs) {
                 $this->idp->markAsAuthenticated($username);
-                $this->idp->redirect();
+                $this->idp->redirect(route('shibboleth-authenticate'));
             }
 
             $data['error'] = 'Incorrect username and/or password';
