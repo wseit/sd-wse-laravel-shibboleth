@@ -49,7 +49,7 @@ Publish the default configuration file and entitlement migrations:
 
     php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider"
 
-You can also publish the views for the shibalike emulated IdP login:
+Optionally, you can also publish the views for the shibalike emulated IdP login:
 
     php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider"
 
