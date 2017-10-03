@@ -16,8 +16,6 @@ matrix:
         - DB_CONNECTION=mysql
   - php: 5.6
     env: PHPUNIT=false
-before_install:
-  - mysql -e 'CREATE DATABASE travis;'
 install:
   - if [ $PHPUNIT = true ]; then composer install; else composer install --no-dev; fi
 script:
