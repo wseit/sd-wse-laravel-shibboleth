@@ -4,3 +4,4 @@ composer.phar
 .phpintel
 phpunit.xml
 /tests/coverage/
+composer.lock
