@@ -1,8 +1,7 @@
 Laravel Shibboleth Service Provider
 ===================================
 
-This package provides an easy way to implement Shibboleth Authentication for
-Laravel 5.4
+This package provides an easy way to implement Shibboleth Authentication for Laravel.
 
 [![Build Status][12]][11]
 [![Code Climate][3]][2]
@@ -10,7 +9,6 @@ Laravel 5.4
 
 ## Features ##
 
-- Compatibility with Laravel 5.4
 - Includes User and Group model examples
 - Ability to *emulate* an IdP (via [mrclay/shibalike][13])
 
@@ -187,14 +185,6 @@ If you're taking advantage of token authentication with [tymon/jwt-auth][4] then
 set this variable in your `.env`
 
     JWTAUTH=true
-
-## Looking for Laravel 5.0 or 4? ##
-
-Laravel 5.0 should be compatible up to tag 1.1.1
-
-We have stopped development on the Laravel 4 version of this plugin for now.
-We are welcoming pull requests, however!
-Feel free to use any tag below 1.0.0 for Laravel 4 compatible versions.
 
 [1]:https://getcomposer.org/
 [2]:https://codeclimate.com/github/razorbacks/laravel-shibboleth
