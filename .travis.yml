@@ -6,6 +6,10 @@ matrix:
     env:
         - PHPUNIT=true
         - DB_CONNECTION=mysql
+  - php: 7.2
+    env:
+        - PHPUNIT=true
+        - DB_CONNECTION=mysql
   - php: 7.1
     env:
         - PHPUNIT=true
