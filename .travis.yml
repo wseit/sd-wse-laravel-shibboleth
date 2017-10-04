@@ -16,10 +16,12 @@ matrix:
         - DB_CONNECTION=mysql
   - php: 5.6
     env: PHPUNIT=false
+before_install:
+  - if [ $PHPUNIT = false ]; then php ./tests/travis/remove-require-dev.php; fi
 install:
-  - if [ $PHPUNIT = true ]; then composer install; else composer install --no-dev; fi
+  - composer install
 script:
-  - cd src/ && ../tests/lint.bash && cd -
+  - ./tests/lint.bash
   - if [ $PHPUNIT = true ]; then ./vendor/bin/phpunit --debug --coverage-clover=coverage.xml; fi
 after_success:
   - if [ $PHPUNIT = true ]; then bash <(curl -s https://codecov.io/bash); fi
