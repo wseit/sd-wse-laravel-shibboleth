@@ -21,7 +21,7 @@ matrix:
   - php: 5.6
     env: PHPUNIT=false
 before_install:
-  - if [ $PHPUNIT = false ]; then php ./tests/travis/remove-require-dev.php; fi
+  - if [ $PHPUNIT = false ]; then php -r "require 'tests/utilities/travis.php'; removeRequireDev();"; fi
 install:
   - composer install
 script:
