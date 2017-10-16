@@ -1,18 +1,17 @@
-Laravel Shibboleth Service Provider
-===================================
+# Laravel Shibboleth Service Provider
 
-This package provides an easy way to implement Shibboleth Authentication for Laravel.
+This package provides Shibboleth authentication for Laravel.
 
 [![Build Status][12]][11]
 [![Code Climate][3]][2]
 [![Code Coverage][8]][7]
 
-## Features ##
+## Features
 
 - Includes User and Group model examples
 - Ability to *emulate* an IdP (via [mrclay/shibalike][13])
 
-## Pre-Requisites ##
+## Pre-Requisites
 
 In order to use this plugin, we assume you already have a pre-existing
 Shibboleth SP and Shibboleth IdP configured. This does not (and will not) go
@@ -21,7 +20,7 @@ into explaining how to set that up.
 However, this might be helpful:
 https://github.com/razorbacks/ubuntu-authentication/tree/master/shibboleth
 
-## Installation ##
+## Installation
 
 Use [composer][1] to require the latest release into your project:
 
@@ -123,6 +122,10 @@ by reading what's been populated into the `$_SERVER` variable after authenticati
 <?php print_r($_SERVER);
 ```
 
+Mapped values will be synced to the user table upon successful authentication.
+
+## Authorization
+
 You can check for an entitlement string of the current user statically:
 
 ```php
@@ -179,7 +182,7 @@ if (Auth::user()->entitlements->contains('name', $entitlement)) {
 }
 ```
 
-## JWTAuth Tokens ##
+## JWTAuth Tokens
 
 If you're taking advantage of token authentication with [tymon/jwt-auth][4] then
 set this variable in your `.env`
