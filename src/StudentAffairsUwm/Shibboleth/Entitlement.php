@@ -16,6 +16,10 @@ class Entitlement
      */
     public static function has($entitlement)
     {
+        if (empty($entitlement)) {
+            throw new \InvalidArgumentException('Entitlement must not be empty.');
+        }
+
         $variable = config('shibboleth.entitlement');
 
         foreach (explode(';', Request::server($variable)) as $given) {
