@@ -2,14 +2,11 @@
 
 This package provides Shibboleth authentication for Laravel.
 
+For development, it can *emulate* an IdP (via [mrclay/shibalike][13]).
+
 [![Build Status][12]][11]
 [![Code Climate][3]][2]
 [![Code Coverage][8]][7]
-
-## Features
-
-- Includes User and Group model examples
-- Ability to *emulate* an IdP (via [mrclay/shibalike][13])
 
 ## Pre-Requisites
 
