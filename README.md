@@ -19,7 +19,7 @@ https://github.com/razorbacks/ubuntu-authentication/tree/master/shibboleth
 
 Use [composer][1] to require the latest release into your project:
 
-    composer require razorbacks/laravel-shibboleth
+    composer require uabookstores/laravel-shibboleth
 
 If you're running Laravel >= 5.5, then you can skip this step, otherwise you
 will need to manually register the service provider in your `config/app.php`
