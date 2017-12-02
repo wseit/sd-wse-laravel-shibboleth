@@ -2,11 +2,9 @@
 
 This package provides Shibboleth authentication for Laravel.
 
-For development, it can *emulate* an IdP (via [mrclay/shibalike][13]).
+For development, it can _emulate_ an IdP (via [mrclay/shibalike][13]).
 
-[![Build Status][12]][11]
-[![Code Climate][3]][2]
-[![Code Coverage][8]][7]
+[![Build Status][12]][11] [![Code Climate][3]][2] [![Code Coverage][8]][7]
 
 ## Pre-Requisites
 
@@ -23,8 +21,8 @@ Use [composer][1] to require the latest release into your project:
 
     composer require razorbacks/laravel-shibboleth
 
-If you're running Laravel >= 5.5, then you can skip this step, otherwise
-you will need to manually register the service provider in your `config/app.php`
+If you're running Laravel >= 5.5, then you can skip this step, otherwise you
+will need to manually register the service provider in your `config/app.php`
 file within the `Providers` array.
 
 ```php
@@ -39,7 +37,7 @@ in Laravel 5.5.
 StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider::class,
 ```
 
-*Note* that the password is the same as the username for shibalike.
+_Note_ that the password is the same as the username for shibalike.
 
 Publish the default configuration file:
 
@@ -68,9 +66,10 @@ Change the driver to `shibboleth` in your `config/auth.php` file.
 ],
 ```
 
-Now users may login via Shibboleth by going to `https://example.com/shibboleth-login`
-and logout using `https://example.com/shibboleth-logout` so you can provide a custom link
-or redirect based on email address in the login form.
+Now users may login via Shibboleth by going to
+`https://example.com/shibboleth-login` and logout using
+`https://example.com/shibboleth-logout` so you can provide a custom link or
+redirect based on email address in the login form.
 
 ```php
 @if (Auth::guest())
@@ -84,7 +83,8 @@ or redirect based on email address in the login form.
 
 You may configure server variable mappings in `config/shibboleth.php` such as
 the user's first name, last name, entitlements, etc. You can take a look at them
-by reading what's been populated into the `$_SERVER` variable after authentication.
+by reading what's been populated into the `$_SERVER` variable after
+authentication.
 
 ```php
 <?php print_r($_SERVER);
@@ -108,10 +108,10 @@ Now you can draft [policies and gates][16] around these entitlements.
 
 ## Local Users
 
-This was designed to work side-by-side with the native authentication system
-for projects where you want to have both Shibboleth and local users.
-If you would like to allow local registration as well as authenticate Shibboleth
-users, then use laravel's built-in auth system.
+This was designed to work side-by-side with the native authentication system for
+projects where you want to have both Shibboleth and local users. If you would
+like to allow local registration as well as authenticate Shibboleth users, then
+use laravel's built-in auth system.
 
     php artisan make:auth
 
@@ -122,15 +122,15 @@ set this variable in your `.env`
 
     JWTAUTH=true
 
-[1]:https://getcomposer.org/
-[2]:https://codeclimate.com/github/razorbacks/laravel-shibboleth
-[3]:https://codeclimate.com/github/razorbacks/laravel-shibboleth/badges/gpa.svg
-[4]:https://github.com/tymondesigns/jwt-auth
-[7]:https://codecov.io/gh/razorbacks/laravel-shibboleth/branch/master
-[8]:https://img.shields.io/codecov/c/github/razorbacks/laravel-shibboleth/master.svg
-[11]:https://travis-ci.org/razorbacks/laravel-shibboleth
-[12]:https://travis-ci.org/razorbacks/laravel-shibboleth.svg?branch=master
-[13]:https://github.com/mrclay/shibalike
-[14]:https://laravel.com/docs/5.4/eloquent-relationships#many-to-many
-[15]:./src/database/migrations/2017_02_24_100000_create_entitlement_user_table.php
-[16]:https://laravel.com/docs/5.4/authorization
+[1]: https://getcomposer.org/
+[2]: https://codeclimate.com/github/razorbacks/laravel-shibboleth
+[3]: https://codeclimate.com/github/razorbacks/laravel-shibboleth/badges/gpa.svg
+[4]: https://github.com/tymondesigns/jwt-auth
+[7]: https://codecov.io/gh/razorbacks/laravel-shibboleth/branch/master
+[8]: https://img.shields.io/codecov/c/github/razorbacks/laravel-shibboleth/master.svg
+[11]: https://travis-ci.org/razorbacks/laravel-shibboleth
+[12]: https://travis-ci.org/razorbacks/laravel-shibboleth.svg?branch=master
+[13]: https://github.com/mrclay/shibalike
+[14]: https://laravel.com/docs/5.4/eloquent-relationships#many-to-many
+[15]: ./src/database/migrations/2017_02_24_100000_create_entitlement_user_table.php
+[16]: https://laravel.com/docs/5.4/authorization

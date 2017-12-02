@@ -1,5 +1,4 @@
 <?php
-
 return array(
 
     /*
@@ -10,10 +9,10 @@ return array(
     | Set your login page, or login routes, here. If you provide a view,
     | that will be rendered. Otherwise, it will redirect to a route.
     |
-     */
+ */
 
-    'idp_login'     => '/Shibboleth.sso/Login',
-    'idp_logout'    => '/Shibboleth.sso/Logout',
+    'idp_login' => '/Shibboleth.sso/Login',
+    'idp_logout' => '/Shibboleth.sso/Logout',
     'authenticated' => '/home',
 
     /*
@@ -31,28 +30,28 @@ return array(
     |
      */
 
-    'emulate_idp'       => false,
+    'emulate_idp' => false,
     'emulate_idp_users' => array(
         'admin' => array(
-            'uid'         => 'admin',
+            'uid' => 'admin',
             'displayName' => 'Admin User',
-            'givenName'   => 'Admin',
-            'sn'          => 'User',
-            'mail'        => 'admin@uwm.edu',
+            'givenName' => 'Admin',
+            'sn' => 'User',
+            'mail' => 'admin@uwm.edu',
         ),
         'staff' => array(
-            'uid'         => 'staff',
+            'uid' => 'staff',
             'displayName' => 'Staff User',
-            'givenName'   => 'Staff',
-            'sn'          => 'User',
-            'mail'        => 'staff@uwm.edu',
+            'givenName' => 'Staff',
+            'sn' => 'User',
+            'mail' => 'staff@uwm.edu',
         ),
-        'user'  => array(
-            'uid'         => 'user',
+        'user' => array(
+            'uid' => 'user',
             'displayName' => 'User User',
-            'givenName'   => 'User',
-            'sn'          => 'User',
-            'mail'        => 'user@uwm.edu',
+            'givenName' => 'User',
+            'sn' => 'User',
+            'mail' => 'user@uwm.edu',
         ),
     ),
 
@@ -65,15 +64,15 @@ return array(
     |
      */
 
-    'entitlement' => 'entitlement',
+    'entitlement' => 'isMemberOf',
 
     'user' => [
         // fillable user model attribute => server variable
-        'email'       => 'mail',
-        'name'        => 'displayName',
-        'first_name'  => 'givenName',
-        'last_name'   => 'sn',
-        'student_id'  => 'employeeNumber',
+        'email' => 'mail',
+        'name' => 'displayName',
+        'first_name' => 'givenName',
+        'last_name' => 'sn',
+        'student_id' => 'employeeNumber',
     ],
 
     /*

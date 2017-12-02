@@ -1,5 +1,4 @@
 <?php
-
 namespace StudentAffairsUwm\Shibboleth\Tests\Stubs;
 
 use StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider;
@@ -33,7 +32,7 @@ trait Setup
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('shibboleth', require __DIR__.'/../../../src/config/shibboleth.php');
+        $app['config']->set('shibboleth', require __DIR__ . '/../../../src/config/shibboleth.php');
 
         $app['config']->set('auth', [
             'defaults' => [
@@ -56,7 +55,7 @@ trait Setup
                     'driver' => 'shibboleth',
                     'model' => \App\User::class,
                 ],
-           ],
+            ],
         ]);
 
         $app['config']->set('database.default', env('DB_CONNECTION', 'sqlite'));
@@ -76,9 +75,9 @@ trait Setup
         ]);
 
         $app['config']->set('database.connections.sqlite', [
-            'driver'   => 'sqlite',
+            'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix'   => '',
+            'prefix' => '',
         ]);
     }
 

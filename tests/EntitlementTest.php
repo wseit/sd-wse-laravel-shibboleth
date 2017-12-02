@@ -1,5 +1,4 @@
 <?php
-
 use Orchestra\Testbench\TestCase;
 use StudentAffairsUwm\Shibboleth\Tests\Stubs\Setup;
 use StudentAffairsUwm\Shibboleth\Entitlement;

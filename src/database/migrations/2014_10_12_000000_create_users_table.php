@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -20,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->string('student_id')->nullable();
+            $table->string('emplid')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

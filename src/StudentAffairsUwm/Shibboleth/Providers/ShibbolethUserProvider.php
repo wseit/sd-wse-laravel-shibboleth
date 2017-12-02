@@ -21,7 +21,7 @@ class ShibbolethUserProvider implements UserProviderInterface
      */
     public function __construct($model)
     {
-        $this->model  = $model;
+        $this->model = $model;
     }
 
     /**
@@ -50,7 +50,7 @@ class ShibbolethUserProvider implements UserProviderInterface
         }
 
         $class = '\\' . ltrim($this->model, '\\');
-        $user  = new $class;
+        $user = new $class;
 
         $query = $user->newQuery();
         foreach ($credentials as $key => $value) {

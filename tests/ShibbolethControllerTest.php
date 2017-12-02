@@ -1,5 +1,4 @@
 <?php
-
 use Orchestra\Testbench\TestCase;
 use StudentAffairsUwm\Shibboleth\Tests\Stubs\Setup;
 use App\User;
@@ -11,7 +10,7 @@ class ShibbolethControllerTest extends TestCase
 
     public function test_creates_user()
     {
-        $getJeff = function(){
+        $getJeff = function () {
             return User::where('email', 'jeff@example.org')->first();
         };
 
@@ -23,9 +22,7 @@ class ShibbolethControllerTest extends TestCase
             'password' => 'password',
         ]);
 
-        $this->assertInstanceOf(User::class, $getJeff());
-
-        (new ShibbolethController)->idpAuthenticate();
+        $this->assertInstanceOf(User::class, $getJeff()); (new ShibbolethController)->idpAuthenticate();
 
         $this->assertSame('100000001', $getJeff()->student_id);
     }

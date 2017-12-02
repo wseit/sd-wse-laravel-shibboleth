@@ -1,5 +1,4 @@
 <?php
-
 Route::group(['middleware' => 'web'], function () {
     Route::get('emulated/idp', 'StudentAffairsUwm\Shibboleth\Controllers\ShibbolethController@emulateIdp');
     Route::post('emulated/idp', 'StudentAffairsUwm\Shibboleth\Controllers\ShibbolethController@emulateIdp');

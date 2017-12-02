@@ -1,5 +1,4 @@
 <?php
-
 namespace StudentAffairsUwm\Shibboleth\Controllers;
 
 use Illuminate\Auth\GenericUser;
@@ -41,7 +40,7 @@ class ShibbolethController extends Controller
     public function __construct(GenericUser $user = null)
     {
         if (config('shibboleth.emulate_idp') === true) {
-            $this->config         = new \Shibalike\Config();
+            $this->config = new \Shibalike\Config();
             $this->config->idpUrl = '/emulated/idp';
 
             $stateManager = $this->getStateManager();
@@ -62,13 +61,13 @@ class ShibbolethController extends Controller
     public function login()
     {
         if (config('shibboleth.emulate_idp') === true) {
-            return Redirect::to(action('\\' . __CLASS__ . '@emulateLogin')
-                . '?target=' .  action('\\' . __CLASS__ . '@idpAuthenticate'));
+            return Redirect::to(action('\\' . __class__ . '@emulateLogin')
+                . '?target=' . action('\\' . __class__ . '@idpAuthenticate'));
         }
 
         return Redirect::to('https://' . Request::server('SERVER_NAME')
             . ':' . Request::server('SERVER_PORT') . config('shibboleth.idp_login')
-            . '?target=' . action('\\' . __CLASS__ . '@idpAuthenticate'));
+            . '?target=' . action('\\' . __class__ . '@idpAuthenticate'));
     }
 
     /**
@@ -105,9 +104,7 @@ class ShibbolethController extends Controller
             $map['password'] = 'shibboleth';
             $user = $userClass::create($map);
             Auth::login($user);
-        }
-
-        else {
+        } else {
             return abort(403, 'Unauthorized');
         }
 
@@ -136,7 +133,7 @@ class ShibbolethController extends Controller
         }
 
         if (config('shibboleth.emulate_idp') == true) {
-            return Redirect::to(action('\\' . __CLASS__ . '@emulateLogout'));
+            return Redirect::to(action('\\' . __class__ . '@emulateLogout'));
         }
 
         return Redirect::to('https://' . Request::server('SERVER_NAME') . config('shibboleth.idp_logout'));
