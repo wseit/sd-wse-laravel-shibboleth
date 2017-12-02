@@ -10,20 +10,20 @@ class ShibbolethControllerTest extends TestCase
 
     public function test_creates_user()
     {
-        $getJeff = function () {
-            return User::where('email', 'jeff@example.org')->first();
+        $getUser = function () {
+            return User::where('email', 'user@example.org')->first();
         };
 
-        $this->assertEmpty($getJeff());
+        $this->assertEmpty($getUser());
 
         User::create([
-            'name' => 'jeff',
-            'email' => 'jeff@example.org',
+            'name' => 'user',
+            'email' => 'user@example.org',
             'password' => 'password',
         ]);
 
-        $this->assertInstanceOf(User::class, $getJeff()); (new ShibbolethController)->idpAuthenticate();
+        $this->assertInstanceOf(User::class, $getUser()); (new ShibbolethController)->idpAuthenticate();
 
-        $this->assertSame('100000001', $getJeff()->student_id);
+        $this->assertSame('100000001', $getUser()->emplid);
     }
 }

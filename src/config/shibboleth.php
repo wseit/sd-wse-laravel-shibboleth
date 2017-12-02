@@ -68,11 +68,11 @@ return array(
 
     'user' => [
         // fillable user model attribute => server variable
+        'name' => 'cn',
         'email' => 'mail',
-        'name' => 'displayName',
         'first_name' => 'givenName',
         'last_name' => 'sn',
-        'student_id' => 'employeeNumber',
+        'emplid' => 'emplId',
     ],
 
     /*
