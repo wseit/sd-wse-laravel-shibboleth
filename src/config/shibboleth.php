@@ -33,22 +33,22 @@ return array(
     'emulate_idp' => false,
     'emulate_idp_users' => array(
         'admin' => array(
-            'uid' => 'admin',
-            'displayName' => 'Admin User',
+            'emplId' => 'admin',
+            'cn' => 'Admin User',
             'givenName' => 'Admin',
             'sn' => 'User',
             'mail' => 'admin@uwm.edu',
         ),
         'staff' => array(
-            'uid' => 'staff',
-            'displayName' => 'Staff User',
+            'emplId' => 'staff',
+            'cn' => 'Staff User',
             'givenName' => 'Staff',
             'sn' => 'User',
             'mail' => 'staff@uwm.edu',
         ),
         'user' => array(
-            'uid' => 'user',
-            'displayName' => 'User User',
+            'emplId' => 'user',
+            'cn' => 'User User',
             'givenName' => 'User',
             'sn' => 'User',
             'mail' => 'user@uwm.edu',
