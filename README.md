@@ -38,12 +38,12 @@ Optionally, you can also publish the views for the shibalike emulated IdP login:
 
     php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider"
 
-> University of Arkansas Users:
+> University of Arizona Users:
 >
 > To also logout with the IdP, set the the following in `config/shibboleth.php`
 >
 > ```php
-> 'idp_logout' => '/Shibboleth.sso/Logout?return=https%3A%2F%2Fidp.uark.edu%2Fidp%2Fexit.jsp',
+> 'idp_logout' => '/Shibboleth.sso/Logout?return=https%3A%2F%2Fshibboleth.arizona.edu%2Fcgi-bin%2Flogout.pl',
 > ```
 
 Change the driver to `shibboleth` in your `config/auth.php` file.
