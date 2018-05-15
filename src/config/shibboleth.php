@@ -1,5 +1,5 @@
 <?php
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -31,29 +31,29 @@ return array(
      */
 
     'emulate_idp' => false,
-    'emulate_idp_users' => array(
-        'admin' => array(
+    'emulate_idp_users' => [
+        'admin' => [
             'emplId' => 'admin',
             'cn' => 'Admin User',
             'givenName' => 'Admin',
             'sn' => 'User',
             'mail' => 'admin@email.arizona.edu',
-        ),
-        'staff' => array(
+        ],
+        'staff' => [
             'emplId' => 'staff',
             'cn' => 'Staff User',
             'givenName' => 'Staff',
             'sn' => 'User',
             'mail' => 'staff@email.arizona.edu',
-        ),
-        'user' => array(
+        ],
+        'user' => [
             'emplId' => 'user',
             'cn' => 'User User',
             'givenName' => 'User',
             'sn' => 'User',
             'mail' => 'user@email.arizona.edu',
-        ),
-    ),
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -99,4 +99,4 @@ return array(
      */
 
     'jwtauth' => env('JWTAUTH', false),
-);
+];
