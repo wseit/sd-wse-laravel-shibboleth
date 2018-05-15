@@ -11,9 +11,9 @@ return [
     |
  */
 
-    'idp_login' => '/Shibboleth.sso/Login',
-    'idp_logout' => '/Shibboleth.sso/Logout',
-    'authenticated' => '/home',
+    'idp_login' => 'https://uabks.arizona.edu/Shibboleth.sso/Login',
+    'idp_logout' => 'https://uabks.arizona.edu/Shibboleth.sso/Logout?return=https%3A%2F%2Fshibboleth.arizona.edu%2Fcgi-bin%2Flogout.pl',
+    'authenticated' => '/',
 
     /*
     |--------------------------------------------------------------------------
@@ -33,25 +33,25 @@ return [
     'emulate_idp' => false,
     'emulate_idp_users' => [
         'admin' => [
-            'emplId' => 'admin',
             'cn' => 'Admin User',
+            'mail' => 'admin@email.arizona.edu',
             'givenName' => 'Admin',
             'sn' => 'User',
-            'mail' => 'admin@email.arizona.edu',
+            'emplId' => 'admin',
         ],
         'staff' => [
-            'emplId' => 'staff',
             'cn' => 'Staff User',
+            'mail' => 'staff@email.arizona.edu',
             'givenName' => 'Staff',
             'sn' => 'User',
-            'mail' => 'staff@email.arizona.edu',
+            'emplId' => 'staff',
         ],
         'user' => [
-            'emplId' => 'user',
             'cn' => 'User User',
+            'mail' => 'user@email.arizona.edu',
             'givenName' => 'User',
             'sn' => 'User',
-            'mail' => 'user@email.arizona.edu',
+            'emplId' => 'user',
         ],
     ],
 
