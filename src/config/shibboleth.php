@@ -11,8 +11,8 @@ return [
     |
  */
 
-    'idp_login' => 'https://uabks.arizona.edu/Shibboleth.sso/Login',
-    'idp_logout' => 'https://uabks.arizona.edu/Shibboleth.sso/Logout?return=https%3A%2F%2Fshibboleth.arizona.edu%2Fcgi-bin%2Flogout.pl',
+    'idp_login' => '/Shibboleth.sso/Login',
+    'idp_logout' => '/Shibboleth.sso/Logout',
     'authenticated' => '/',
 
     /*
@@ -30,28 +30,28 @@ return [
     |
      */
 
-    'emulate_idp' => false,
+    'emulate_idp' => env('EMULATE_IDP', false),
     'emulate_idp_users' => [
         'admin' => [
-            'cn' => 'Admin User',
-            'mail' => 'admin@email.arizona.edu',
-            'givenName' => 'Admin',
-            'sn' => 'User',
-            'emplId' => 'admin',
+            'Shib-cn' => 'Admin User',
+            'Shib-mail' => 'admin@email.arizona.edu',
+            'Shib-givenName' => 'Admin',
+            'Shib-sn' => 'User',
+            'Shib-emplId' => 'admin',
         ],
         'staff' => [
-            'cn' => 'Staff User',
-            'mail' => 'staff@email.arizona.edu',
-            'givenName' => 'Staff',
-            'sn' => 'User',
-            'emplId' => 'staff',
+            'Shib-cn' => 'Staff User',
+            'Shib-mail' => 'staff@email.arizona.edu',
+            'Shib-givenName' => 'Staff',
+            'Shib-sn' => 'User',
+            'Shib-emplId' => 'staff',
         ],
         'user' => [
-            'cn' => 'User User',
-            'mail' => 'user@email.arizona.edu',
-            'givenName' => 'User',
-            'sn' => 'User',
-            'emplId' => 'user',
+            'Shib-cn' => 'User User',
+            'Shib-mail' => 'user@email.arizona.edu',
+            'Shib-givenName' => 'User',
+            'Shib-sn' => 'User',
+            'Shib-emplId' => 'user',
         ],
     ],
 
@@ -64,15 +64,15 @@ return [
     |
      */
 
-    'entitlement' => 'isMemberOf',
+    'entitlement' => 'Shib-isMemberOf',
 
     'user' => [
         // fillable user model attribute => server variable
-        'name' => 'cn',
-        'email' => 'mail',
-        'first_name' => 'givenName',
-        'last_name' => 'sn',
-        'emplid' => 'emplId',
+        'name' => 'Shib-cn',
+        'first_name' => 'Shib-givenName',
+        'last_name' => 'Shib-sn',
+        'email' => 'Shib-mail',
+        'emplid' => 'Shib-emplId',
     ],
 
     /*
