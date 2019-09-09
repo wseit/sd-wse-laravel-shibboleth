@@ -1,18 +1,15 @@
 <?php
+
 namespace StudentAffairsUwm\Shibboleth\Controllers;
 
+use JWTAuth;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\View;
-use Illuminate\Console\AppNamespaceDetectorTrait;
-use JWTAuth;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Redirect;
 
 class ShibbolethController extends Controller
 {
@@ -144,7 +141,7 @@ class ShibbolethController extends Controller
      */
     public function emulateLogin()
     {
-        $from = (Input::get('target') != null) ? Input::get('target') : $this->getServerVariable('HTTP_REFERER');
+        $from = (Request::input('target') != null) ? Request::input('target') : $this->getServerVariable('HTTP_REFERER');
 
         $this->sp->makeAuthRequest($from);
         $this->sp->redirect();
@@ -169,9 +166,9 @@ class ShibbolethController extends Controller
     {
         $data = [];
 
-        if (Input::get('username') != null) {
-            $username = (Input::get('username') === Input::get('password')) ?
-                Input::get('username') : '';
+        if (Request::input('username') != null) {
+            $username = (Request::input('username') === Request::input('password')) ?
+                Request::input('username') : '';
 
             $userAttrs = $this->idp->fetchAttrs($username);
             if ($userAttrs) {
@@ -223,8 +220,7 @@ class ShibbolethController extends Controller
         $variable = Request::server($variableName);
 
         return (!empty($variable)) ?
-            $variable :
-            Request::server('REDIRECT_' . $variableName);
+            $variable : Request::server('REDIRECT_' . $variableName);
     }
 
     /*
