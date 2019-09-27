@@ -1,8 +1,11 @@
-<?php namespace StudentAffairsUwm\Shibboleth\Providers;
+<?php
 
+namespace StudentAffairsUwm\Shibboleth\Providers;
+
+use Hash;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider as UserProviderInterface;
-use Hash;
+use Illuminate\Support\Str;
 
 class ShibbolethUserProvider implements UserProviderInterface
 {
@@ -54,7 +57,7 @@ class ShibbolethUserProvider implements UserProviderInterface
 
         $query = $user->newQuery();
         foreach ($credentials as $key => $value) {
-            if (!str_contains($key, 'password')) {
+            if (!Str::contains($key, 'password')) {
                 $query->where($key, $value);
             }
         }
