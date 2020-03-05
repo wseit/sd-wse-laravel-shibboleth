@@ -1,9 +1,9 @@
 <?php
+
 namespace StudentAffairsUwm\Shibboleth;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
 
 class ShibbolethServiceProvider extends ServiceProvider
 {

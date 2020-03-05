@@ -1,4 +1,5 @@
 <?php
+
 namespace StudentAffairsUwm\Shibboleth;
 
 use InvalidArgumentException;
@@ -16,7 +17,7 @@ class Entitlement
     public static function has($entitlement)
     {
         if (empty($entitlement)) {
-            throw new \InvalidArgumentException('Entitlement must not be empty.');
+            throw new InvalidArgumentException('Entitlement must not be empty.');
         }
 
         $variable = config('shibboleth.entitlement');

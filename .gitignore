@@ -5,3 +5,4 @@ composer.phar
 phpunit.xml
 /tests/coverage/
 composer.lock
+.phpunit.result.cache

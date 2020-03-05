@@ -1,8 +1,8 @@
 <?php
+
 use Orchestra\Testbench\TestCase;
-use StudentAffairsUwm\Shibboleth\Tests\Stubs\Setup;
 use StudentAffairsUwm\Shibboleth\Entitlement;
-use App\User;
+use StudentAffairsUwm\Shibboleth\Tests\Stubs\Setup;
 
 class EntitlementTest extends TestCase
 {
@@ -10,9 +10,7 @@ class EntitlementTest extends TestCase
 
     public function test_checks_for_current_entitlement()
     {
-        // $_SERVER fixture set in
-        // StudentAffairsUwm\Shibboleth\Tests\Stubs\Setup::setUp();
-
+        // $_SERVER fixture set in StudentAffairsUwm\Shibboleth\Tests\Stubs\Setup::setUp();
         $entitlement = 'urn:mace:uark.edu:ADGroups:Computing Services:Something:Somesuch-WCOB';
 
         $this->assertTrue(Entitlement::has($entitlement));
