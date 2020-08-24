@@ -15,6 +15,7 @@ return [
     'idp_logout' => '/Shibboleth.sso/Logout',
     'authenticated' => '/',
 
+
     /*
     |--------------------------------------------------------------------------
     | Emulate an IdP
@@ -74,8 +75,8 @@ return [
         'email' => 'Shib-mail',
         'emplid' => 'Shib-emplId',
     ],
-
-    //User model attribute to authenticate against
+    
+    //The user model field (from the user array above) that should be used for authentication
     'user_authentication_field' => 'email',
 
     /*
