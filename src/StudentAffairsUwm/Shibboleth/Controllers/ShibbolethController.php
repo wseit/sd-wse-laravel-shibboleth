@@ -87,10 +87,11 @@ class ShibbolethController extends Controller
 
         $userClass = config('auth.providers.users.model', 'App\User');
 
-        // Attempt to login with the email, if success, update the user model
-        // with data from the Shibboleth headers (if present)
-        if (Auth::attempt(array('email' => $map['email']), true)) {
-            $user = $userClass::where('email', '=', $map['email'])->first();
+        //Attempt to login with the specified field (email by default). If success, update the user model
+        //with data from the Shibboleth headers (if present)
+        $authenticationField = config('shibboleth.user_authentication_field', 'email');
+        if (Auth::attempt(array($authenticationField => $map[$authenticationField]), true)) {
+            $user = $userClass::where($authenticationField, '=', $map[$authenticationField])->first();
 
             // Update the model as necessary
             $user->update($map);
