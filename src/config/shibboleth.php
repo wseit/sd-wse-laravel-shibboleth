@@ -75,6 +75,9 @@ return [
         'emplid' => 'Shib-emplId',
     ],
 
+    //User model attribute to authenticate against
+    'user_authentication_field' => 'email',
+
     /*
     |--------------------------------------------------------------------------
     | User Creation and Groups Settings
