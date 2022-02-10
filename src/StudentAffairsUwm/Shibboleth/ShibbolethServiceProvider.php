@@ -28,11 +28,11 @@ class ShibbolethServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (config('jwtauth')) {
-            $this->app->register('Tymon\JWTAuth\Providers\JWTAuthServiceProvider');
+        if (config('shibboleth.jwtauth') === true) {
+            $this->app->register('PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider');
             $loader = AliasLoader::getInstance();
-            $loader->alias('JWTAuth', 'Tymon\JWTAuth\Facades\JWTAuth');
-            $loader->alias('JWTFactory', 'Tymon\JWTAuth\Facades\JWTFactory');
+            $loader->alias('JWTAuth', 'PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth');
+            $loader->alias('JWTFactory', 'PHPOpenSourceSaver\JWTAuth\Facades\JWTFactory');
         }
 
         $this->app['auth']->provider('shibboleth', function ($app) {

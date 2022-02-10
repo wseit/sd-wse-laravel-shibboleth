@@ -2,14 +2,14 @@
 
 namespace StudentAffairsUwm\Shibboleth\Controllers;
 
-use JWTAuth;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\View;
+use JWTAuth;
 
 class ShibbolethController extends Controller
 {
@@ -110,7 +110,7 @@ class ShibbolethController extends Controller
 
         $route = config('shibboleth.authenticated');
 
-        if (config('jwtauth') === true) {
+        if (config('shibboleth.jwtauth') === true) {
             $route .= $this->tokenizeRedirect($user, ['auth_type' => 'idp']);
         }
 
@@ -125,12 +125,12 @@ class ShibbolethController extends Controller
         Auth::logout();
         Session::flush();
 
-        if (config('jwtauth')) {
+        if (config('shibboleth.jwtauth') === true) {
             $token = JWTAuth::parseToken();
             $token->invalidate();
         }
 
-        if (config('shibboleth.emulate_idp') == true) {
+        if (config('shibboleth.emulate_idp') === true) {
             return Redirect::to(action('\\' . __class__ . '@emulateLogout'));
         }
 
@@ -213,7 +213,7 @@ class ShibbolethController extends Controller
      */
     private function getServerVariable($variableName)
     {
-        if (config('shibboleth.emulate_idp') == true) {
+        if (config('shibboleth.emulate_idp') === true) {
             return isset($_SERVER[$variableName]) ?
                 $_SERVER[$variableName] : null;
         }
