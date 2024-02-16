@@ -10,24 +10,24 @@ For development, it can _emulate_ an IdP (via [mrclay/shibalike][13]).
 
 Use [composer][1] to require the latest release into your project:
 
-    composer require uabookstores/laravel-shibboleth
+    composer require jhu-wse/laravel-shibboleth
 
 If you you would like to use the emulated IdP via shibalike, then you will need
 to manually register it on any version - this is not automatically loaded.
 
 ```php
-StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider::class,
+Jhu\Wse\LaravelShibboleth\ShibalikeServiceProvider::class,
 ```
 
 _Note_ that the password is the same as the username for shibalike.
 
 Publish the default configuration file:
 
-    php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider"
+    php artisan vendor:publish --provider="Jhu\Wse\LaravelShibboleth\ShibbolethServiceProvider"
 
 Optionally, you can also publish the views for the shibalike emulated IdP login:
 
-    php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider"
+    php artisan vendor:publish --provider="Jhu\Wse\LaravelShibboleth\ShibalikeServiceProvider"
 
 Change the driver to `shibboleth` in your `config/auth.php` file.
 
