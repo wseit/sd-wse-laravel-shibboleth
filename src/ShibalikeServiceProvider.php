@@ -13,12 +13,12 @@ class ShibalikeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../../resources/views/shibalike', 'shibalike');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/shibalike', 'shibalike');
 
         $this->publishes([
-            __DIR__ . '/../../resources/views/shibalike/' => resource_path('views/vendor/shibalike'),
+            __DIR__ . '/../resources/views/shibalike/' => resource_path('views/vendor/shibalike'),
         ]);
 
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/shibalike.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/shibalike.php');
     }
 }

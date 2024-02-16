@@ -15,10 +15,10 @@ class ShibbolethServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../../config/shibboleth.php' => config_path('shibboleth.php'),
+            __DIR__ . '/../config/shibboleth.php' => config_path('shibboleth.php'),
         ]);
 
-        $this->loadRoutesFrom(__DIR__ . '/../../routes/shibboleth.php');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/shibboleth.php');
     }
 
     /**
