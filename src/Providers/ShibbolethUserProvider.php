@@ -3,11 +3,11 @@
 namespace Jhu\Wse\LaravelShibboleth\Providers;
 
 use Hash;
-use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Str;
 
-class ShibbolethUserProvider extends EloquentUserProvider
+class ShibbolethUserProvider implements UserProvider
 {
     /**
      * The user model.
