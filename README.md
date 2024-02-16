@@ -1,6 +1,6 @@
 # Laravel Shibboleth Service Provider
 
-This package provides Shibboleth authentication for Laravel.
+This package provides Shibboleth authentication for Laravel. It was forked from [uabookstores/laravel-shibboleth](17).
 
 For development, it can _emulate_ an IdP (via [mrclay/shibalike][13]).
 
@@ -108,3 +108,4 @@ set this variable in your `.env`
 [14]: https://laravel.com/docs/eloquent-relationships#many-to-many
 [15]: ./src/database/migrations/2017_02_24_100000_create_entitlement_user_table.php
 [16]: https://laravel.com/docs/authorization
+[17]: https://github.com/uabookstores/laravel-shibboleth
