@@ -12,17 +12,8 @@ Use [composer][1] to require the latest release into your project:
 
     composer require uabookstores/laravel-shibboleth
 
-If you're running Laravel >= 5.5, then you can skip this step, otherwise you
-will need to manually register the service provider in your `config/app.php`
-file within the `Providers` array.
-
-```php
-StudentAffairsUwm\Shibboleth\ShibbolethServiceProvider::class,
-```
-
 If you you would like to use the emulated IdP via shibalike, then you will need
-to manually register it on any version - this is not automatically loaded even
-in Laravel 5.5.
+to manually register it on any version - this is not automatically loaded.
 
 ```php
 StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider::class,
@@ -38,21 +29,13 @@ Optionally, you can also publish the views for the shibalike emulated IdP login:
 
     php artisan vendor:publish --provider="StudentAffairsUwm\Shibboleth\ShibalikeServiceProvider"
 
-> University of Arizona Users:
->
-> To also logout with the IdP, set the the following in `config/shibboleth.php`
->
-> ```php
-> 'idp_logout' => '/Shibboleth.sso/Logout?return=https%3A%2F%2Fshibboleth.arizona.edu%2Fcgi-bin%2Flogout.pl',
-> ```
-
 Change the driver to `shibboleth` in your `config/auth.php` file.
 
 ```php
 'providers' => [
     'users' => [
         'driver' => 'shibboleth',
-        'model'  => App\User::class,
+        'model'  => App\Models\User::class,
     ],
 ],
 ```
@@ -122,6 +105,6 @@ set this variable in your `.env`
 [11]: https://travis-ci.org/razorbacks/laravel-shibboleth
 [12]: https://travis-ci.org/razorbacks/laravel-shibboleth.svg?branch=master
 [13]: https://github.com/mrclay/shibalike
-[14]: https://laravel.com/docs/5.4/eloquent-relationships#many-to-many
+[14]: https://laravel.com/docs/eloquent-relationships#many-to-many
 [15]: ./src/database/migrations/2017_02_24_100000_create_entitlement_user_table.php
-[16]: https://laravel.com/docs/5.4/authorization
+[16]: https://laravel.com/docs/authorization

@@ -1,6 +1,6 @@
 <?php
 
-namespace StudentAffairsUwm\Shibboleth;
+namespace Jhu\Wse\LaravelShibboleth\Shibboleth;
 
 use InvalidArgumentException;
 use Request;

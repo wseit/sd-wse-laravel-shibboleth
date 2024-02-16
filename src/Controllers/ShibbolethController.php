@@ -1,6 +1,6 @@
 <?php
 
-namespace StudentAffairsUwm\Shibboleth\Controllers;
+namespace Jhu\Wse\LaravelShibboleth\Controllers;
 
 use Illuminate\Auth\GenericUser;
 use Illuminate\Routing\Controller;

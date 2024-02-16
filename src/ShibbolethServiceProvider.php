@@ -1,6 +1,6 @@
 <?php
 
-namespace StudentAffairsUwm\Shibboleth;
+namespace Jhu\Wse\LaravelShibboleth;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;

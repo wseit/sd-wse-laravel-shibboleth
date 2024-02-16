@@ -1,6 +1,6 @@
 <?php
 
-namespace StudentAffairsUwm\Shibboleth\Providers;
+namespace Jhu\Wse\LaravelShibboleth\Providers;
 
 use Hash;
 use Illuminate\Contracts\Auth\Authenticatable;
