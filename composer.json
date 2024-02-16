@@ -24,7 +24,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Jhu\\Wse\\LaravelShibboleth\\ShibbolethServiceProvider\\"
+        "Jhu\\Wse\\LaravelShibboleth\\ShibbolethServiceProvider
       ]
     }
   },
