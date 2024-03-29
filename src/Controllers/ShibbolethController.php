@@ -5,10 +5,12 @@ namespace Jhu\Wse\LaravelShibboleth\Controllers;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
+use Jhu\Wse\LaravelShibboleth\Exceptions\MissingUserAuthenticationFieldException;
 use JWTAuth;
 
 class ShibbolethController extends Controller
@@ -73,16 +75,34 @@ class ShibbolethController extends Controller
      */
     public function idpAuthenticate()
     {
-        if (empty(config('shibboleth.user'))) {
-            throw new \Exception('No user attribute mapping for server variables.');
+        //Get the user mapping
+        $userMap = config('shibboleth.user');
+
+        //Make sure it makes sense
+        if (!is_array($userMap) || count($userMap) === 0) {
+            throw new \Exception('You must provide at least one mapping of user attributes to server variables in shibboleth.user config');
         }
 
-        foreach (config('shibboleth.user') as $local => $server) {
-            $map[$local] = $this->getServerVariable($server);
+        //Create an array we can use with keys of the user model and the value from the idp serve
+        $modelToServerValuesMap = [];
+        foreach ($userMap as $local => $server) {
+            $modelToServerValuesMap[$local] = $this->getServerVariable($server);
         }
 
-        if (empty($map['email'])) {
-            return abort(403, 'Unauthorized');
+        //Remove nulls
+        $modelToServerValuesMap = array_filter($modelToServerValuesMap);
+
+        //Get the field to use for authentication, defaulting to email
+        $userAuthenticationField = config('shibboleth.user_authentication_field', 'email');
+
+        //If the key at $map[$userAuthenticationField] doesn't exist OR is null... report an error
+        if (!isset($modelToServerValuesMap[$userAuthenticationField]) || $modelToServerValuesMap[$userAuthenticationField] === null) {
+            throw new MissingUserAuthenticationFieldException(
+                message: 'The user authentication field "'.$userAuthenticationField.'" was missing from the server fields when trying to authentication.',
+                context: [
+                    'modelToServerValuesMap' => $modelToServerValuesMap
+                ]
+            );
         }
 
         $userClass = config('auth.providers.users.model', 'App\User');
@@ -90,17 +110,17 @@ class ShibbolethController extends Controller
         //Attempt to login with the specified field (email by default). If success, update the user model
         //with data from the Shibboleth headers (if present)
         $authenticationField = config('shibboleth.user_authentication_field', 'email');
-        if (Auth::attempt(array($authenticationField => $map[$authenticationField]), true)) {
-            $user = $userClass::where($authenticationField, '=', $map[$authenticationField])->first();
+        if (Auth::attempt(array($authenticationField => $modelToServerValuesMap[$authenticationField]), true)) {
+            $user = $userClass::where($authenticationField, '=', $modelToServerValuesMap[$authenticationField])->first();
 
             // Update the model as necessary
-            $user->update($map);
-        }
-
-        // Add user and send through auth.
-        elseif (config('shibboleth.add_new_users', true)) {
-            $map['password'] = 'shibboleth';
-            $user = $userClass::create($map);
+            if (config('shibboleth.update_users')) {
+                $user->update($modelToServerValuesMap);
+            }
+        } elseif (config('shibboleth.add_new_users', true)) {
+            // Add user and send through auth.
+            $modelToServerValuesMap['password'] = 'shibboleth';
+            $user = $userClass::create($modelToServerValuesMap);
             Auth::login($user);
         } else {
             return abort(403, 'Unauthorized');
