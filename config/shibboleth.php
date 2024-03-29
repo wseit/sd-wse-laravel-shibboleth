@@ -81,7 +81,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | User Creation and Groups Settings
+    | User Creation and Update Settings
     |--------------------------------------------------------------------------
     |
     | Allows you to change if / how new users are added
@@ -89,6 +89,7 @@ return [
      */
 
     'add_new_users' => true, // Should new users be added automatically if they do not exist?
+    'update_users' => true, //should users be updated with data from the idp when they log in?
 
     /*
     |--------------------------------------------------------------------------

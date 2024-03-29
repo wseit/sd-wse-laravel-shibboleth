@@ -64,7 +64,8 @@ authentication.
 <?php print_r($_SERVER);
 ```
 
-Mapped values will be synced to the user table upon successful authentication.
+If the config setting `shibboleth.update_users` is set to `true` (the default) then mapped values will be synced to the user table upon successful authentication. 
+To disable updated, set `shibboleth.update_users` to `false`.
 
 ## Authorization
 
@@ -79,15 +80,6 @@ if (Entitlement::has($entitlement)) {
 ```
 
 Now you can draft [policies and gates][16] around these entitlements.
-
-## Local Users
-
-This was designed to work side-by-side with the native authentication system for
-projects where you want to have both Shibboleth and local users. If you would
-like to allow local registration as well as authenticate Shibboleth users, then
-use laravel's built-in auth system.
-
-    php artisan make:auth
 
 ## JWTAuth Tokens
 
