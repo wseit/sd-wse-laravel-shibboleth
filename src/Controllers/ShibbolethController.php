@@ -105,25 +105,31 @@ class ShibbolethController extends Controller
             );
         }
 
-        $userClass = config('auth.providers.users.model', 'App\User');
+        //Get the class name for the user model
+        $userModelClass = config('auth.providers.users.model', 'App\Model\User');
 
-        //Attempt to login with the specified field (email by default). If success, update the user model
-        //with data from the Shibboleth headers (if present)
-        $authenticationField = config('shibboleth.user_authentication_field', 'email');
-        if (Auth::attempt(array($authenticationField => $modelToServerValuesMap[$authenticationField]), true)) {
-            $user = $userClass::where($authenticationField, '=', $modelToServerValuesMap[$authenticationField])->first();
+        //Build up the credentials
+        $credentials = [
+            $userAuthenticationField => $modelToServerValuesMap[$userAuthenticationField]
+        ];
+
+        //Attempt the login
+        if (Auth::attempt($credentials, true)) {
+            $user = $userModelClass::where($userAuthenticationField, '=', $modelToServerValuesMap[$userAuthenticationField])->first();
 
             // Update the model as necessary
             if (config('shibboleth.update_users')) {
                 $user->update($modelToServerValuesMap);
             }
         } elseif (config('shibboleth.add_new_users', true)) {
-            // Add user and send through auth.
+            //If login failed and we are adding new users, attempt to add
             $modelToServerValuesMap['password'] = 'shibboleth';
-            $user = $userClass::create($modelToServerValuesMap);
+            $user = $userModelClass::create($modelToServerValuesMap);
             Auth::login($user);
         } else {
-            return abort(403, 'Unauthorized');
+            //user not found in this system, complain and show an access denied message
+            Log::notice('User successfully logged in via Shibboleth but could not be matched to a user in this system.', $modelToServerValuesMap);
+            return abort(403);
         }
 
         Session::regenerate();
