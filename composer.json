@@ -9,8 +9,8 @@
   ],
   "minimum-stability": "stable",
   "require": {
-    "illuminate/support": "^9.0 || ^10.0",
-    "laravel/framework": "^9.0 || ^10.0",
+    "illuminate/support": "^9.0 || ^10.0 | ^11.0",
+    "laravel/framework": "^9.0 || ^10.0 | ^11.0",
     "mrclay/shibalike": "1.0.0",
     "php-open-source-saver/jwt-auth": "^1.4 || ^2.0"
   },
